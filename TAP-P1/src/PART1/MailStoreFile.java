@@ -13,6 +13,7 @@ import java.util.Scanner;
  */
 public class MailStoreFile extends MailStore{
 	
+	private String fileName;
 
 	/**
 	 * 
@@ -22,6 +23,7 @@ public class MailStoreFile extends MailStore{
 	public MailStoreFile(String fileName) throws FileNotFoundException {
 		super();
 		// TODO Auto-generated constructor stub
+		this.fileName = fileName;
 		fileToList(fileName);
 	}
 	
@@ -37,7 +39,9 @@ public class MailStoreFile extends MailStore{
 
 		while(s.hasNext()) {
 			String line[] = s.next().split(";"); //obtain the next line and split it
-			super.messages.add(new Message(line[0], line[1], line[2], line[3]));
+			User sender = new User(line[0], line[1], Integer.parseInt(line[2]));
+			User receiver = new User(line[3], line[4], Integer.parseInt(line[5]));
+			super.messages.add(new Message(sender, receiver, line[6], line[7]));
 		}
 	}
 	

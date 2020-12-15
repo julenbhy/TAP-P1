@@ -51,6 +51,14 @@ public class MailStore implements Iterable<Message>{
 		}
 		return result;
 	}
+
+	/**
+	 * @return the messages
+	 */
+	public List<Message> getMessages() {
+		return messages;
+	}
+	
 	
 	
 	

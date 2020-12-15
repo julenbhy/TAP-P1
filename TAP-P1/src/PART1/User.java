@@ -8,8 +8,8 @@ package PART1;
  * @author Alberto Iglesias Burgos
  */
 public class User {
-		String userName, name;
-		int yearOfBirth;
+		private String userName, name;
+		private int yearOfBirth;
 		
 		
 		/**
@@ -43,6 +43,13 @@ public class User {
 		public int getYearOfBirth() {
 			return yearOfBirth;
 		}
+
+		
+		public void printUser() {
+			System.out.println("User [userName=" + userName + ", name=" + name + ", yearOfBirth=" + yearOfBirth + "]");
+		}
+		
+		
 		
 		
 		

@@ -4,6 +4,7 @@
 package PART1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  * @author Alberto Iglesias Burgos
  */
 public class MailBox implements Iterable<Message>{
-	User user;
-	MailStore mailStore;
-	List<Message> messages;
+	private User user;
+	private MailStore mailStore;
+	private List<Message> messages;
 	
 	
 	/**
@@ -37,11 +38,11 @@ public class MailBox implements Iterable<Message>{
 	
 	
 	/**
-	 * 
+	 * Update the MailBox sorted by date
 	 */
 	public void updateMail() {
 		this.messages = mailStore.getMails(user);
-		//sort by date
+		this.sortByDate();
 	}
 
 
@@ -59,25 +60,81 @@ public class MailBox implements Iterable<Message>{
 	 * @param subject
 	 * @param body
 	 */
-	public void sendMessage(String destination, String subject, String body) {
-		this.mailStore.sendMail(new Message(this.user.getUserName(), destination, subject, body));
+	public void sendMail(User destination, String subject, String body) {
+		this.mailStore.sendMail(new Message(this.user, destination, subject, body));
 	}
 	
-	public List<Message> sortByXXX (){
+	/**
+	 * Sort the MailBox by date
+	 */
+	public void sortByDate (){
+		this.messages.sort((o1,o2) -> o1.getTime().compareTo(o2.getTime()));
+		Collections.reverse(this.messages);
+	}
+	
+	
+	/**
+	 * filter if the subject contains a given word
+	 * @param word
+	 * @return the filtered list
+	 */
+	public List<Message> filterByContainsWord(String word){
 		List<Message> result = new ArrayList<Message>();
 		for(Message elem: messages) {
-			//ordenador como nos salga del nardo
+			if(elem.containsWord(word)) result.add(elem);
 		}
 		return result;
 	}
 	
-	public List<Message> filterUserMailByXXX(){
+	/**
+	 * filter by sender
+	 * @param word
+	 * @return the filtered list
+	 */
+	public List<Message> filterBySender(String word){
 		List<Message> result = new ArrayList<Message>();
 		for(Message elem: messages) {
-			if(elem.isIntended(user)) result.add(elem);
+			if(elem.getSender().equals(word)) result.add(elem);
 		}
 		return result;
 	}
 	
+
+	/**
+	 * filter if the subject is a single word
+	 * the subject can't contain an space
+	 * @return the filtered list
+	 */
+	public List<Message> filterBySingleWord(){
+		List<Message> result = new ArrayList<Message>();
+		for(Message elem: messages) {
+			if(!elem.containsWord(" ")) result.add(elem);
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * filter if the sender was born after a certain year (not included)
+	 * @return the filtered list
+	 */
+	public List<Message> filterBySendersYear(int year){
+		// we have decided to receive year instead of '2000' in order to be reusable
+		List<Message> result = new ArrayList<Message>();
+		for(Message elem: messages) {
+			if(elem.checkSendersYear(year)) result.add(elem);
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * return the amount of messages in the MailBox
+	 * ( = amount of messages for a user)
+	 * @return
+	 */
+	public int messageAmount() {
+		return this.messages.size();
+	}
 
 }
