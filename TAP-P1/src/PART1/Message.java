@@ -10,7 +10,7 @@ import java.sql.Date;
  * @author Alberto Iglesias Burgos
  */
 public class Message {
-	private User sender, receiver;
+	private String sender, receiver;
 	private String subject, body;
 	private Date time;
 	
@@ -22,7 +22,7 @@ public class Message {
 	 * @param subject
 	 * @param body
 	 */
-	public Message( User sender, User receiver, String subject, String body) {
+	public Message( String sender, String receiver, String subject, String body) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.subject = subject;
@@ -36,8 +36,8 @@ public class Message {
 	 * @param user
 	 * @return True if is intended
 	 */
-	public boolean isIntended(User user) {
-		return (this.receiver.equals(user.getUserName()));
+	public boolean isIntended(String user) {
+		return this.receiver.equals(user);
 	}
 	
 	/**
@@ -56,11 +56,46 @@ public class Message {
 	 * @param year
 	 * @return true if was born later
 	 */
+	/*
 	public boolean checkSendersYear(int year) {
 		return (this.sender.getYearOfBirth() > year); 
 	}
+	*/
 	
 	
+
+
+	/**
+	 * @return the sender
+	 */
+	public String getSender() {
+		return sender;
+	}
+	
+	
+	
+	/**
+	 * @return the receiver
+	 */
+	public String getReceiver() {
+		return receiver;
+	}
+
+
+	/**
+	 * @return the subject
+	 */
+	public String getSubject() {
+		return subject;
+	}
+	
+
+	/**
+	 * @return the body
+	 */
+	public String getBody() {
+		return body;
+	}
 	
 	/**
 	 * @return the time
@@ -70,37 +105,10 @@ public class Message {
 	}
 
 
-	/**
-	 * @return the sender
-	 */
-	public User getSender() {
-		return sender;
-	}
-	
-	
-	
-	/**
-	 * @return the subject
-	 */
-	public String getSubject() {
-		return subject;
-	}
-
-
 	public void printMessage() {
 		System.out.println("Message [sender=" + sender + ", receiver=" + receiver + ", subject=" + subject + ", body=" + body
 				+ ", time=" + time + "]");
 	}
-
-
-	
-
-	
-	
-	
-	
-	
-	
 
 	
 }

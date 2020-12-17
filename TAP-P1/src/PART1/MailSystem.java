@@ -6,6 +6,7 @@ package PART1;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Julen Bohoyo Bengoetxea
@@ -23,7 +24,7 @@ public class MailSystem {
 	public MailSystem() {
 		users = new ArrayList<User>();
 		mailBoxes = new ArrayList<MailBox>();
-		mailStore = new MailStore();
+		mailStore = new MailStoreMem();
 	}
 	
 	
@@ -32,10 +33,15 @@ public class MailSystem {
 	 * @param fileName
 	 * @throws FileNotFoundException 
 	 */
-	public MailSystem(String fileName) throws FileNotFoundException {
-		users = new ArrayList<User>();
-		mailBoxes = new ArrayList<MailBox>();
-		mailStore = new MailStoreFile(fileName);
+	public MailSystem(String fileName) {
+		try {
+			mailStore = new MailStoreFile(fileName);
+			users = new ArrayList<User>();
+			mailBoxes = new ArrayList<MailBox>();
+		}
+		catch(Exception e) {
+			System.out.println("Error: can't find the file");
+		}
 	}
 	
 	
@@ -75,6 +81,19 @@ public class MailSystem {
 	}
 	
 	/**
+	 * Returns the User object of a certain userName
+	 * @param userName
+	 * @return the User
+	 */
+	public User getUser(String userName) {
+		if(this.exists(userName)) {
+			for(User elem: users) if(elem.getUserName().equals(userName)) return elem;
+		}
+		return null;
+	}
+	
+	
+	/**
 	 * Checks if the userName is already used
 	 * @param userName
 	 * @return true if it is used
@@ -91,17 +110,22 @@ public class MailSystem {
 	 * @return a List with all the messages
 	 */
 	public List<Message> getAllMessages(){
-		return mailStore.getMessages();
+		try{
+			return mailStore.getAllMessages();
+		}
+		catch(Exception e) {
+			System.out.println("Error: can't find the file");
+			return null;
+		}
 	}
-
-
+	
 	/**
 	 * @return the users
 	 */
 	public List<User> getUsers() {
 		return users;
 	}
-	
+
 	
 	//los de filtrar
 	/**
@@ -117,6 +141,35 @@ public class MailSystem {
 		}
 		return result;
 	}
+	
+	public List<Message> filterBy(String condition, String word){
+		switch(condition){
+		
+		case "sender": 
+			return this.getAllMessages().stream()
+										.filter(o -> o.getSender().equals(word)).collect(Collectors.toList());
+			
+		case "receiver": 
+			return this.getAllMessages().stream()
+										.filter(o -> o.getReceiver().equals(word)).collect(Collectors.toList());
+
+		case "subject":
+			return this.getAllMessages().stream()
+										.filter(o -> o.getSubject().contains(word)).collect(Collectors.toList());
+
+		case "body": 
+			return this.getAllMessages().stream()
+										.filter(o -> o.getBody().contains(word)).collect(Collectors.toList());
+
+		case "date": 
+			//return this.messages.stream().filter(s -> s.getTime().);
+			
+		//añadir mas opciones de filtrado
+		
+		default: return null;
+		}
+	}
+	
 	
 	/**
 	 * return the total amount of messages in the system
@@ -150,5 +203,9 @@ public class MailSystem {
 		}
 		return result;
 	}
+	
+	
+
+
 
 }

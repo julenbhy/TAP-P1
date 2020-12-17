@@ -21,7 +21,7 @@ public class UnitTest {
 		MailBox julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);
 		MailBox albertoChichote = mSystem.createUser("AlbertoChicote", "Alberto", 1969);
 		
-		albigle.sendMail(destination, subject, body);
+		//albigle.sendMail(destination, subject, body);
 
 	}
 

@@ -3,64 +3,34 @@
  */
 package PART1;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
-import java.util.Iterator;
-
 
 /**
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
  */
-public class MailStore implements Iterable<Message>{
+public interface MailStore {
 	
-	protected List<Message> messages;
-	
-	/**
-	 * Constructor
-	 */
-	public MailStore() {
-		this.messages = new ArrayList<Message>();
-	}
-	
-	@Override
-	public Iterator<Message> iterator() {
-		// TODO Auto-generated method stub
-		return messages.iterator();
-	}
-	
-	
-
 	/**
 	 * 
 	 * @param mail
 	 */
-	public void sendMail(Message mail) {
-		this.messages.add(mail);
-	}
+	public void sendMail(Message mail)  throws IOException;
 
 	/**
 	 * 
 	 * @param user
 	 * @return List with the messages intended for the user
 	 */
-	public List<Message> getMails(User user) {
-		List<Message> result = new ArrayList<Message>();
-		for(Message elem: messages) {
-			if(elem.isIntended(user)) result.add(elem);
-		}
-		return result;
-	}
-
+	public List<Message> getMails(String user) throws FileNotFoundException;
+	
 	/**
-	 * @return the messages
+	 * 
+	 * @return
+	 * @throws FileNotFoundException
 	 */
-	public List<Message> getMessages() {
-		return messages;
-	}
-	
-	
-	
-	
-	
+	public List<Message> getAllMessages() throws FileNotFoundException;
+
 }

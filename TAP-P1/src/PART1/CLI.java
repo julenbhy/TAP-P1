@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Julen Bohoyo Bengoetxea
@@ -38,13 +39,15 @@ public class CLI {
 		lista.add(c);
 		lista.add(a);
 		
-		/*
+		
 		System.out.println(lista);
-		lista.sort((o1,o2) -> o1.getTime().compareTo(o2.getTime()));
+		lista = lista.stream()
+				  .sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+				  .collect(Collectors.toList());
 		System.out.println("lista ordenada:" + lista);
 		Collections.reverse(lista);
 		System.out.println("lista invertida:" + lista);
-		*/
+		
 
 	}
 

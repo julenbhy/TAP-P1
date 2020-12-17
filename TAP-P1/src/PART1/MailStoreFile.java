@@ -3,15 +3,16 @@
  */
 package PART1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
  */
-public class MailStoreFile extends MailStore{
+public class MailStoreFile implements MailStore{
 	
 	private String fileName;
 
@@ -21,37 +22,42 @@ public class MailStoreFile extends MailStore{
 	 * @throws FileNotFoundException
 	 */
 	public MailStoreFile(String fileName) throws FileNotFoundException {
-		super();
-		// TODO Auto-generated constructor stub
 		this.fileName = fileName;
-		fileToList(fileName);
 	}
 	
 	
+	@Override
+	public void sendMail(Message mail) throws IOException {
+		FileWriter fw = new FileWriter(fileName, true);
+	    BufferedWriter bw = new BufferedWriter(fw);
+	    bw.write(mail.getSender()+";"+mail.getReceiver()+";"+mail.getSubject()+";"+mail.getBody());
+	    bw.newLine();
+	    bw.close();
+	}
 	
-	/**
-	 * 
-	 * @param fileName
-	 * @throws FileNotFoundException
-	 */
-	private void fileToList(String fileName) throws FileNotFoundException {
+	
+	@Override
+	public List<Message> getMails(String user) throws FileNotFoundException {
+		List<Message> result = new ArrayList<>();
 		Scanner s = new Scanner(new File(fileName));
-
 		while(s.hasNext()) {
 			String line[] = s.next().split(";"); //obtain the next line and split it
-			User sender = new User(line[0], line[1], Integer.parseInt(line[2]));
-			User receiver = new User(line[3], line[4], Integer.parseInt(line[5]));
-			super.messages.add(new Message(sender, receiver, line[6], line[7]));
+			if(line[1].toLowerCase().equals(user.toLowerCase()))
+						result.add(new Message(line[0], line[1], line[2], line[3]));	//sender;receiver;subject;body
 		}
+		return result;
 	}
 	
 	
-	/**
-	 * 
-	 */
-	private void saveList() {
-		
+	@Override
+	public List<Message> getAllMessages() throws FileNotFoundException {
+		List<Message> result = new ArrayList<>();
+		Scanner s = new Scanner(new File(fileName));
+		while(s.hasNext()) {
+			String line[] = s.next().split(";"); //obtain the next line and split it
+			result.add(new Message(line[0], line[1], line[2], line[3]));	//sender;receiver;subject;body
+		}
+		return result;
 	}
-
 
 }
