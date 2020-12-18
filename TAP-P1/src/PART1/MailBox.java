@@ -4,6 +4,9 @@
 package PART1;
 
 import java.io.FileNotFoundException;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -81,18 +84,20 @@ public class MailBox implements Iterable<Message>{
 	}
 	
 	/**
-	 * Sort the MailBox by date
+	 * 
+	 * @param condition The condition to sort (newer, older, a-z or z-a)
+	 * @return
 	 */
 	
 	public List<Message> sortBy(String condition){
 		switch(condition){
 		
 		case "newer": 
-			this.messages = this.messages.stream()
-											.sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
-											.collect(Collectors.toList());
-			Collections.reverse(this.messages);	
-			return this.messages;
+			List<Message> result  = this.messages.stream()
+													.sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+													.collect(Collectors.toList());
+			Collections.reverse(result);	
+			return result;
 			
 			
 		case "older": 
@@ -108,11 +113,11 @@ public class MailBox implements Iterable<Message>{
 			
 			
 		case "z-a":
-			this.messages =  this.messages.stream()
+			List<Message> resultAZ =  this.messages.stream()
 											.sorted((o1,o2) -> o1.getSender().compareTo(o2.getSender()))
 											.collect(Collectors.toList());
-			Collections.reverse(this.messages);	
-			return this.messages;
+			Collections.reverse(resultAZ);	
+			return resultAZ;
 			
 		//añadir mas opciones de ordenacion
 			
@@ -124,12 +129,17 @@ public class MailBox implements Iterable<Message>{
 	
 	
 	/**
-	 * filter if the subject contains a given word
+	 * filter the mailbox by a given parameter
 	 * @param condition The condition to filter (sender, subject, body or date)
+	 * date must be format: dd/mm/yyyy
 	 * @param word The string it must search
 	 * @return the filtered list
+	 * @throws ParseException 
 	 */
-	public List<Message> filterBy(String condition, String word){
+	public List<Message> filterBy(String condition, String word) throws ParseException{
+		
+		Date date;
+		
 		switch(condition){
 		
 		case "sender": 
@@ -141,10 +151,17 @@ public class MailBox implements Iterable<Message>{
 		case "body": 
 			return this.messages.stream().filter(s -> s.getBody().contains(word)).collect(Collectors.toList());
 
-		case "date": 
-			//return this.messages.stream().filter(s -> s.getTime().);
-			
-		//añadir mas opciones de filtrado
+		case "after": 
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
+			return this.messages.stream()
+								.filter(s -> s.getTime().after(date))
+								.collect(Collectors.toList());
+
+		case "before": 
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
+			return this.messages.stream()
+								.filter(s -> s.getTime().before(date))
+								.collect(Collectors.toList());
 		
 		default: return null;
 		}

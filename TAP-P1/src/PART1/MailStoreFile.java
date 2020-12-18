@@ -14,34 +14,33 @@ import java.util.Scanner;
  */
 public class MailStoreFile implements MailStore{
 	
-	private String fileName;
+	private Scanner sc;
+	private  BufferedWriter bw;
 
 	/**
 	 * 
 	 * @param fileName
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public MailStoreFile(String fileName) throws FileNotFoundException {
-		this.fileName = fileName;
+	public MailStoreFile(String fileName) throws IOException{
+		sc = new Scanner(new File(fileName));
+		bw = new BufferedWriter(new FileWriter(fileName, true));
 	}
 	
 	
 	@Override
-	public void sendMail(Message mail) throws IOException {
-		FileWriter fw = new FileWriter(fileName, true);
-	    BufferedWriter bw = new BufferedWriter(fw);
+	public void sendMail(Message mail) throws IOException{
 	    bw.write(mail.getSender()+";"+mail.getReceiver()+";"+mail.getSubject()+";"+mail.getBody());
 	    bw.newLine();
-	    bw.close();
 	}
 	
 	
 	@Override
-	public List<Message> getMails(String user) throws FileNotFoundException {
+	public List<Message> getMails(String user){
 		List<Message> result = new ArrayList<>();
-		Scanner s = new Scanner(new File(fileName));
-		while(s.hasNext()) {
-			String line[] = s.next().split(";"); //obtain the next line and split it
+		while(sc.hasNext()) {
+			String line[] = sc.next().split(";"); //obtain the next line and split it
 			if(line[1].toLowerCase().equals(user.toLowerCase()))
 						result.add(new Message(line[0], line[1], line[2], line[3]));	//sender;receiver;subject;body
 		}
@@ -50,11 +49,10 @@ public class MailStoreFile implements MailStore{
 	
 	
 	@Override
-	public List<Message> getAllMessages() throws FileNotFoundException {
+	public List<Message> getAllMessages(){
 		List<Message> result = new ArrayList<>();
-		Scanner s = new Scanner(new File(fileName));
-		while(s.hasNext()) {
-			String line[] = s.next().split(";"); //obtain the next line and split it
+		while(sc.hasNext()) {
+			String line[] = sc.next().split(";"); //obtain the next line and split it
 			result.add(new Message(line[0], line[1], line[2], line[3]));	//sender;receiver;subject;body
 		}
 		return result;
