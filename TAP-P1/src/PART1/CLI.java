@@ -131,6 +131,7 @@ public class CLI {
 	}
 	
 	public static void userLoop(String userName) {
+		MailBox mBox = sys.getMailBox(userName);
 		userLoop: do {
 			command = sc.nextLine().split(" ");
 			
@@ -173,7 +174,7 @@ public class CLI {
 									break;
 										
 					
-				case "filter":		if(command.length != 3) {	//checks if the number of arguments is correct
+				case "update":		if(command.length != 3) {	//checks if the number of arguments is correct
 										System.out.println("Error: Incorrect args");
 										break;
 									}
@@ -186,6 +187,11 @@ public class CLI {
 							        }
 									break;
 									
+				case "list":
+					
+				case "sort":
+					
+				case "filter":		
 						
 				case "logout":		break userLoop;
 								
