@@ -12,7 +12,7 @@ import java.util.Date;
 public class Message {
 	private String sender, receiver;
 	private String subject, body;
-	private Date time;
+	private Date date;
 	
 	
 	/**
@@ -27,7 +27,7 @@ public class Message {
 		this.receiver = receiver;
 		this.subject = subject;
 		this.body = body;
-		this.time = new Date(System.currentTimeMillis());
+		this.date = new Date(System.currentTimeMillis());
 	}
 	
 	
@@ -100,14 +100,14 @@ public class Message {
 	/**
 	 * @return the time
 	 */
-	public Date getTime() {
-		return time;
+	public Date getDate() {
+		return date;
 	}
 
 
 	public void printMessage() {
 		System.out.println("Message [sender=" + sender + ", receiver=" + receiver + ", subject=" + subject + ", body=" + body
-				+ ", time=" + time + "]");
+				+ ", time=" + date + "]");
 	}
 
 	

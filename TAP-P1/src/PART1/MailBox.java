@@ -49,7 +49,7 @@ public class MailBox implements Iterable<Message>{
 	public void updateMail() {
 		try {
 			this.messages = mailStore.getMails(user.getUserName()).stream()
-																  .sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+																  .sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
 																  .collect(Collectors.toList());
 			Collections.reverse(this.messages);
 		}
@@ -74,7 +74,6 @@ public class MailBox implements Iterable<Message>{
 	 * @param body
 	 */
 	public void sendMail(String destination, String subject, String body) {
-		//comprobar que el usuario existe
 		try {
 			this.mailStore.sendMail(new Message(this.user.getUserName(), destination, subject, body));
 		}
@@ -95,7 +94,7 @@ public class MailBox implements Iterable<Message>{
 		
 		case "newer": 
 			List<Message> result  = this.messages.stream()
-													.sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+													.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
 													.collect(Collectors.toList());
 			Collections.reverse(result);	
 			return result;
@@ -103,7 +102,7 @@ public class MailBox implements Iterable<Message>{
 			
 		case "older": 
 			return this.messages.stream()
-								.sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+								.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
 								.collect(Collectors.toList());
 			
 			
@@ -140,6 +139,7 @@ public class MailBox implements Iterable<Message>{
 	public List<Message> filterBy(String condition, String word) throws ParseException{
 		
 		Date date;
+		int number;
 		
 		switch(condition){
 		
@@ -155,66 +155,32 @@ public class MailBox implements Iterable<Message>{
 		case "after": 
 			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
 			return this.messages.stream()
-								.filter(s -> s.getTime().after(date))
+								.filter(s -> s.getDate().after(date))
 								.collect(Collectors.toList());
 
 		case "before": 
 			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
 			return this.messages.stream()
-								.filter(s -> s.getTime().before(date))
+								.filter(s -> s.getDate().before(date))
 								.collect(Collectors.toList());
+			
+		case "lessthan":
+			number = Integer.parseInt(word);
+			return this.messages.stream()
+						.filter(s -> s.getBody().length() < number)
+						.collect(Collectors.toList());
+			
+		case "morethan":
+			number = Integer.parseInt(word);
+			return this.messages.stream()
+						.filter(s -> s.getBody().length() > number)
+						.collect(Collectors.toList());
 		
 		default: return null;
 		}
 	}
 	
-	/**
-	 * filter by sender
-	 * @param word
-	 * @return the filtered list
-	 */
-	/*
-	public List<Message> filterBySender(String word){
-		List<Message> result = new ArrayList<Message>();
-		for(Message elem: messages) {
-			if(elem.getSender().equals(word)) result.add(elem);
-		}
-		return result;
-	}
-	*/
-	
 
-	/**
-	 * filter if the subject is a single word
-	 * the subject can't contain an space
-	 * @return the filtered list
-	 */
-	/*
-	public List<Message> filterBySingleWord(){
-		List<Message> result = new ArrayList<Message>();
-		for(Message elem: messages) {
-			if(!elem.containsWord(" ")) result.add(elem);
-		}
-		return result;
-	}
-	*/
-	
-	
-	/**
-	 * filter if the sender was born after a certain year (not included)
-	 * @return the filtered list
-	 */
-	/**
-	public List<Message> filterBySendersYear(int year){
-		// we have decided to receive year instead of '2000' in order to be reusable
-		List<Message> result = new ArrayList<Message>();
-		for(Message elem: messages) {
-			if(elem.checkSendersYear(year)) result.add(elem);
-		}
-		return result;
-	}
-	*/
-	
 	
 	/**
 	 * return the amount of messages in the MailBox

@@ -11,7 +11,7 @@ import PART1.Message;
 //dos implementaciones gracias a strategi, strategi se suele hacer con interface, pero como ahora lo harermos dentro de un 
 //decorator pues tenemos que usar una abstract class.
 //en este enlace explican justo esto https://stackoverflow.com/questions/25098726/using-an-abstract-class-instead-of-the-interface-in-the-strategy-design-pattern
-public abstract class WrapperForTheMailStore implements MailStore{
+public abstract class WrapperForTheMailStore extends MailStore{
 	
 	private MailStore client;
 	

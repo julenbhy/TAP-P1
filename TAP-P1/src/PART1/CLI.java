@@ -71,7 +71,8 @@ public class CLI {
 										break;
 									}
 									try {
-										sys.filterBy(command[1], command[2]);
+										sys.filterBy(command[1], command[2]).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+																									s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 									} catch (ParseException e) {
 										System.out.println("Error: Incorrect date format");
 									}catch (NumberFormatException e) {
@@ -156,14 +157,31 @@ public class CLI {
 									}
 									System.out.println("List of messages:");
 									List<Message> list = mBox.listMail();
-									list.stream().forEach(s -> {
-										System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody());
-									});
+									list.stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+																s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 									break;
 					
-				case "sort":
+				case "sort":		if(command.length != 2) {	//checks if the number of arguments is correct
+										System.out.println("Error: Incorrect args");
+										break;
+									}
+									mBox.sortBy(command[1]).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+																					s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+									break;
 					
-				case "filter":		
+				case "filter":		if(command.length != 3) {	//checks if the number of arguments is correct
+										System.out.println("Error: Incorrect args");
+										break;
+									}
+									try {
+										mBox.filterBy(command[1], command[2]).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+																									s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+									} catch (ParseException e) {
+										System.out.println("Error: Incorrect date format");
+									}catch (NumberFormatException e) {
+							        	System.out.println("Error: Incorrect number format");
+							        }
+									break;
 						
 				case "logout":		break userLoop;
 								
@@ -171,6 +189,9 @@ public class CLI {
 			}
 		}while(true);
 	}
+	
+	
+	
 	public static void printSysOps() {
 		System.out.println("\n\nSys operations: ");
 		System.out.println("createuser <user nickname> <name> <year of birth (yyyy)> : Create a new user as admin");
@@ -188,6 +209,9 @@ public class CLI {
 						+ "\n\t- morethan <n> : filters messages that contain more than n words in the body.");
 		System.out.println("\nlogas <username> : Log in as a user. No passwords");
 	}
+	
+	
+	
 	public static void printUserOps() {
 		System.out.println("\n\nUser operations: ");
 		System.out.println("send <to> : send a new message.");

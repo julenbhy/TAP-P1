@@ -30,15 +30,32 @@ public class UnitTest {
 		MailSystem mSystem = new MailSystem();
 		MailBox albigle = mSystem.createUser("Albigle", "Alberto", 1999);
 		MailBox julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);
-		MailBox albertoChichote = mSystem.createUser("AlbertoChicote", "Alberto", 1969);
+		MailBox albertoChicote = mSystem.createUser("AlbertoChicote", "Alberto", 1969);
 		
-		//albigle.sendMail(destination, subject, body);
-
+		albigle.sendMail("Julenbhy", "subject", "body");
+		albigle.sendMail("Albigle", "Hola", "Hola a mi mismo");
+		albigle.sendMail("Julenbhy", "subject", "body");
+		albertoChicote.sendMail("Julenbhy", "subject", "body");
+		julenbhy.sendMail("Albigle", "Hola", "Muy buenas");
+		albigle.sendMail("AlbertoChicote", "subjecyt", "Body");
+		
+		albigle.updateMail();	//update sorts by time by default
+		albigle.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
+		julenbhy.updateMail();
+		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
+		
+		
+		System.out.println("Paso 6:");
+		julenbhy.filterBy("sender", "Albigle").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+																"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
+		
 		
 		
 		
 		//para comprobar la ordenacion
-		
+		/*
 				List<Message> lista = new ArrayList<Message>();
 				Message a = new Message("Alberto", "Jon", "Me perdonas?", "el bodkjmhnybgtyfvtrcvgbhy");
 				TimeUnit.SECONDS.sleep(2);
@@ -64,6 +81,7 @@ public class UnitTest {
 				System.out.println("lista ordenada:" + lista);
 				Collections.reverse(lista);
 				System.out.println("lista invertida:" + lista);
+				*/
 	}
 
 }

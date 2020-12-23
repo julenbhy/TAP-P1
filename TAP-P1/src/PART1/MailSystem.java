@@ -113,7 +113,7 @@ public class MailSystem {
 	 */
 	public boolean userExists(String userName) {
 		for(User elem: users) {
-			if(elem.getUserName().equals(userName)) return true;
+			if(elem.getUserName().toLowerCase().equals(userName.toLowerCase())) return true;
 		}
 		return false;
 	}
@@ -151,7 +151,7 @@ public class MailSystem {
 		
 		case "newer": 
 			List<Message> result = this.getAllMessages().stream()
-														.sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+														.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
 														.collect(Collectors.toList());
 			Collections.reverse(result);	
 			return result;
@@ -159,7 +159,7 @@ public class MailSystem {
 			
 		case "older": 
 			return this.getAllMessages().stream()
-										.sorted((o1,o2) -> o1.getTime().compareTo(o2.getTime()))
+										.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
 										.collect(Collectors.toList());
 			
 			
@@ -195,7 +195,7 @@ public class MailSystem {
 	public List<Message> filterBy(String condition, String word) throws ParseException, NumberFormatException{
 
 		Date date;
-		int year;
+		int number;
 		
 		switch(condition){
 		
@@ -218,38 +218,42 @@ public class MailSystem {
 		case "after": 
 			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
 			return this.getAllMessages().stream()
-										.filter(s -> s.getTime().after(date))
+										.filter(s -> s.getDate().after(date))
 										.collect(Collectors.toList());
 
 		case "before": 
 			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
 			return this.getAllMessages().stream()
-										.filter(s -> s.getTime().before(date))
+										.filter(s -> s.getDate().before(date))
 										.collect(Collectors.toList());
 			
 		case "senderafter":
-			year = Integer.parseInt(word);
+			number = Integer.parseInt(word);
 			List<Message> resultAfter = new ArrayList<>();
 			this.users.stream()
-						.filter(s -> s.getYearOfBirth() >= year)
+						.filter(s -> s.getYearOfBirth() >= number)
 						.forEach(s -> resultAfter.addAll(getSentMessages(s.getUserName())));
 			return resultAfter;
 			
 		case "senderbefore":
-			year = Integer.parseInt(word);
+			number = Integer.parseInt(word);
 			List<Message> resultBefore = new ArrayList<>();
 			this.users.stream()
-						.filter(s -> s.getYearOfBirth() < year)
+						.filter(s -> s.getYearOfBirth() < number)
 						.forEach(s -> resultBefore.addAll(getSentMessages(s.getUserName())));
 			return resultBefore;
 			
 		case "lessthan":
-			
-			return null;
+			number = Integer.parseInt(word);
+			return this.getAllMessages().stream()
+						.filter(s -> s.getBody().length() < number)
+						.collect(Collectors.toList());
 			
 		case "morethan":
-			
-			return null;
+			number = Integer.parseInt(word);
+			return this.getAllMessages().stream()
+						.filter(s -> s.getBody().length() > number)
+						.collect(Collectors.toList());
 			
 		default: return null;
 		}
@@ -289,44 +293,6 @@ public class MailSystem {
 		return result;
 
 	}
-	
-	/**
-	 * filters all the messages in the system by the subject
-	 * @param subject
-	 * @return the filtered List
-	 */
-	/*
-	public List<Message> filterBySubjectd(String subject){
-		List<Message> result = new ArrayList<Message>();
-		List<Message> messages = getAllMessages(); 	//we get all the messages from the MailStore
-		for(Message elem: messages) {
-			if(elem.getSubject().equals(subject)) result.add(elem);
-		}
-		return result;
-	}
-	*/
-	
-	
-	/**
-	 * filters all the messages in the system by the maximum year of birth
-	 * @param year
-	 * @return the new List with the messages
-	 */
-	/*
-	public List<Message> usersBeforeYear(int year){
-		List<Message> result = new ArrayList<Message>();
-		int i = 0;
-		for(User elem: users) {
-			//if the yearOfBirth if before year we append to the result the message list from the user's MailBox
-			if(elem.getYearOfBirth() < year) result.addAll(mailBoxes.get(i).listMail());
-			i++;
-		}
-		return result;
-	}
-	*/
-	
-	
-
 
 
 }
