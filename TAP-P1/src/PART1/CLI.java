@@ -3,6 +3,7 @@
  */
 package PART1;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
@@ -24,34 +25,14 @@ public class CLI {
 	 * @throws InterruptedException 
 	 * @throws ParseException 
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		sc = new Scanner(System.in);  // Create a Scanner object
 		
 		System.out.println("Welcome");
-		System.out.println("Which type of MailStore do you want to use?"
-						+ "\n\t-press enter if you want a MailStore from memory"
-						+ "\n\t-enter a file name if you want a MailStore from a file (with the extension)");
 		
-		//loop for selecting a MailSystem from memory or from a file
-		//if the file does't exist we continue asking
-		fileNameLoop: do {
-			String fileName = sc.nextLine();
-			if(fileName == "") {
-				sys = new MailSystem();
-				break fileNameLoop;
-			}
-			else {
-				try {
-					sys = new MailSystem(fileName);
-					break fileNameLoop;
-				} catch (IOException e) {
-					System.out.println("Error: file not found, try again");
-				}
-			}
-		}while(true);
-		
+		fileMenu();
 
 		System.out.println("\n\nType 'help' for showing options");
 		
@@ -111,6 +92,18 @@ public class CLI {
 									System.out.println("You has logged as: "+command[1]);
 									userLoop(command[1]);
 									break;
+									
+				case "list":		if(command.length != 1) {	//checks if the number of arguments is correct
+										System.out.println("Error: Incorrect args");
+										break;
+									}
+									System.out.println("List of all messages:");
+									List<Message> list = sys.getAllMessages();
+									list.stream().forEach(s -> {
+										System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody());
+									});
+									
+				break;
 								
 				default:		System.out.println("Error: command not found");
 			}
@@ -214,5 +207,48 @@ public class CLI {
 						+ "\n\t- lessthan <n> : filters messages that contain less than n words in the body."
 						+ "\n\t- morethan <n> : filters messages that contain more than n words in the body.");
 		System.out.println("\nlogout : Exit from user to system.");
+	}
+	
+	public static void fileMenu() {
+		//loop for selecting a MailSystem from memory or from a file
+		//if the file does't exist we continue asking
+		String line;
+		File f;
+		fileNameLoop: do {
+			System.out.println("Which type of MailStore do you want to use?"
+				+ "\n\t-'memory' if you want a MailStore from memory"
+				+ "\n\t-'file' if you want to load from a file (with the extension)"
+				+ "\n\t-'new file' if you want to create a new file (with the extension)");
+			line = sc.nextLine();
+			switch (line) {
+			
+				case "memory":		sys = new MailSystem();
+									break fileNameLoop;
+								
+				case "file":		System.out.println("Introduce file name: ");
+									line = sc.nextLine();
+									f = new File(line);
+									if(f.exists()) {
+										sys = new MailSystem(line);
+										break fileNameLoop;
+									} 
+									else{
+										System.out.println("Error, file not found");
+										break;
+									}
+								
+				case "new file":	System.out.println("Introduce file name: ");
+									line = sc.nextLine();
+									f = new File(line);
+									try {
+										f.createNewFile();
+										break fileNameLoop;
+									} catch (IOException e) {
+										System.out.println("Error, can't create the new file");
+										break;
+									}
+			}
+			
+		}while(true);
 	}
 }

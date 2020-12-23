@@ -74,6 +74,7 @@ public class MailBox implements Iterable<Message>{
 	 * @param body
 	 */
 	public void sendMail(String destination, String subject, String body) {
+		//comprobar que el usuario existe
 		try {
 			this.mailStore.sendMail(new Message(this.user.getUserName(), destination, subject, body));
 		}

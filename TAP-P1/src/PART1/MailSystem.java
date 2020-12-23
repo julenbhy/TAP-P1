@@ -40,7 +40,7 @@ public class MailSystem {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public MailSystem(String fileName) throws IOException {
+	public MailSystem(String fileName) {
 		mailStore = new MailStoreFile(fileName);
 		users = new ArrayList<User>();
 		mailBoxes = new ArrayList<MailBox>();

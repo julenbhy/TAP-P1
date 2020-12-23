@@ -22,7 +22,8 @@ public abstract class WrapperForTheMailStore implements MailStore{
 
 	public void sendMail(Message mail) throws IOException
 	{
-		Message result = new Message(mail.getSender(), mail.getReceiver(), mail.getSubject(), mail.getBody().reverse());
+		StringBuilder output = new StringBuilder(mail.getBody()).reverse();
+		Message result = new Message(mail.getSender(), mail.getReceiver(), mail.getSubject(), output.toString());
 		client.sendMail(result);
 	}
 

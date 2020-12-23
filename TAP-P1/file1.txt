@@ -1,6 +1,3 @@
-prueba;prueba;yo;soy yo????
-prueba;albigle;welcome;welcome to mailsystem
-prueba;julenbhy;ongi etorri;ongi etorri
-prueba;akerretovic;benvingut;benvingut al nou correu
-prueba;prueba;new mail;new new new new new new
-prueba;prueba;escribe bn la с;сссссссссссссссссссссссu
+aa;aa;hola;asdfdgf
+aa;aa;otro;body
+aa;bb;quetal;?.,/mhy
