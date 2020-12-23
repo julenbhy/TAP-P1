@@ -172,7 +172,7 @@ public class CLI {
 		}while(true);
 	}
 	public static void printSysOps() {
-		System.out.println("Sys operations: ");
+		System.out.println("\n\nSys operations: ");
 		System.out.println("createuser <user nickname> <name> <year of birth (yyyy)> : Create a new user as admin");
 		System.out.println("\nfilter <filter type> <condition>: Filter at a system level. The program has implemented several conditions for "
 						+ "\nfiltering messages and can be referenced from the command. For instance: "
@@ -189,7 +189,7 @@ public class CLI {
 		System.out.println("\nlogas <username> : Log in as a user. No passwords");
 	}
 	public static void printUserOps() {
-		System.out.println("User operations: ");
+		System.out.println("\n\nUser operations: ");
 		System.out.println("send <to> : send a new message.");
 		System.out.println("update : retrieve messages from the mail store.");
 		System.out.println("list : show messages sorted by sent time.");
@@ -215,7 +215,7 @@ public class CLI {
 		String line;
 		File f;
 		fileNameLoop: do {
-			System.out.println("Which type of MailStore do you want to use?"
+			System.out.println("\n\nWhich type of MailStore do you want to use?"
 				+ "\n\t-'memory' if you want a MailStore from memory"
 				+ "\n\t-'file' if you want to load from a file (with the extension)"
 				+ "\n\t-'new file' if you want to create a new file (with the extension)");
