@@ -243,17 +243,29 @@ public class MailSystem {
 						.forEach(s -> resultBefore.addAll(getSentMessages(s.getUserName())));
 			return resultBefore;
 			
-		case "lessthan":
+		case "bodylessthan":
 			number = Integer.parseInt(word);
 			return this.getAllMessages().stream()
-						.filter(s -> s.getBody().length() < number)
+						.filter(s -> s.getBody().split("\\s+").length < number)
 						.collect(Collectors.toList());
 			
-		case "morethan":
+		case "bodymorethan":
 			number = Integer.parseInt(word);
 			return this.getAllMessages().stream()
-						.filter(s -> s.getBody().length() > number)
+						.filter(s -> s.getBody().split("\\s+").length > number)
 						.collect(Collectors.toList());
+			
+		case "subjectlessthan":
+			number = Integer.parseInt(word);
+			return this.getAllMessages().stream()
+						.filter(s -> s.getSubject().split("\\s+").length < number)
+						.collect(Collectors.toList());
+			
+		case "subjectmorethan":
+			number = Integer.parseInt(word);
+			return this.getAllMessages().stream()
+						.filter(s -> s.getSubject().split("\\s+").length > number)
+						.collect(Collectors.toList());	
 			
 		default: return null;
 		}
@@ -273,7 +285,7 @@ public class MailSystem {
 	 * @return
 	 */
 	public float averageMessages() {
-		return this.messageAmount()/this.users.size();
+		return (float) this.messageAmount()/(float) this.users.size();
 	}
 	
 	

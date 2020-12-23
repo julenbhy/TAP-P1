@@ -164,18 +164,30 @@ public class MailBox implements Iterable<Message>{
 								.filter(s -> s.getDate().before(date))
 								.collect(Collectors.toList());
 			
-		case "lessthan":
+		case "bodylessthan":
 			number = Integer.parseInt(word);
 			return this.messages.stream()
-						.filter(s -> s.getBody().length() < number)
+						.filter(s -> s.getBody().split("\\s+").length < number)
 						.collect(Collectors.toList());
 			
-		case "morethan":
+		case "bodymorethan":
 			number = Integer.parseInt(word);
 			return this.messages.stream()
-						.filter(s -> s.getBody().length() > number)
+						.filter(s -> s.getBody().split("\\s+").length > number)
 						.collect(Collectors.toList());
-		
+			
+		case "subjectlessthan":
+			number = Integer.parseInt(word);
+			return this.messages.stream()
+						.filter(s -> s.getSubject().split("\\s+").length < number)
+						.collect(Collectors.toList());
+			
+		case "subjectmorethan":
+			number = Integer.parseInt(word);
+			return this.messages.stream()
+						.filter(s -> s.getSubject().split("\\s+").length > number)
+						.collect(Collectors.toList());	
+			
 		default: return null;
 		}
 	}
