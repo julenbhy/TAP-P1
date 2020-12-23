@@ -290,19 +290,17 @@ public class MailSystem {
 	
 	
 	public Map<String, List<Message>> groupBySubject(){
-	//	return Map<String, List<Message>> bySubject 
-										//	= this.getAllMessages().stream()
-										//	.collect(Collectors.groupingBy(Message::getSubject));	
-		return null;
+	return this.getAllMessages().stream()
+								.collect(Collectors.groupingBy(Message::getSubject));	
+		//return null;
 	}
 	
 	
-	public int contWords(String name) {
-		int result = 0;
-		//this.getAllMessages().stream()
-				//				.filter(s -> s.getSender().equals(name))
-			//					.forEach(s -> result =+ s.getBody().length());
-		return result;
+	public int countWords(String name) {
+		return this.getAllMessages().stream()
+							.filter(s -> s.getSender().toLowerCase().equals(name.toLowerCase()))
+							.mapToInt(s -> s.getBody().split("\\s+").length).sum();
+							//.forEach(s -> result =+ s.getBody().split("\\s+").length);
 
 	}
 

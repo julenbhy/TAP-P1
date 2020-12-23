@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -91,8 +93,15 @@ public class UnitTest {
 		mSystem.getAllMessages().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 
-		System.out.println("\nStep 10: get the average number of messages received per user and print it");
+		System.out.println("\nStep 11: get the average number of messages received per user and print it");
 		System.out.println("Average: "+mSystem.averageMessages());
+		
+		System.out.println("\nStep 12: group the messages per subject in a Map<String, List<Message>> and print it");
+		mSystem.getAllMessages().stream().collect(Collectors.groupingBy(Message::getSubject)).forEach((key, value) -> {System.out.println("Subject: "+key); value.forEach(s -> System.out.println(" -Body: "+s.getBody()));});	
+		
+		System.out.println("\nStep 13: count the words of all messages sent by users with a certain real name");
+		System.out.println(mSystem.countWords("julenbhy"));
+			
 		//para comprobar la ordenacion
 		/*
 				List<Message> lista = new ArrayList<Message>();
