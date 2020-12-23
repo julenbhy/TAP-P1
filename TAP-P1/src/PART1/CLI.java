@@ -98,6 +98,7 @@ public class CLI {
 							        }
 									break;
 									
+									
 						
 				case "logas":		if(command.length != 2) {	//checks if the number of arguments is correct
 										System.out.println("Error: Incorrect args");
