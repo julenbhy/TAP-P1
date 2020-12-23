@@ -33,6 +33,7 @@ public class MailStoreFile implements MailStore{
 	public void sendMail(Message mail) throws IOException{
 	    bw.write(mail.getSender()+";"+mail.getReceiver()+";"+mail.getSubject()+";"+mail.getBody());
 	    bw.newLine();
+	    bw.flush();
 	}
 	
 	
