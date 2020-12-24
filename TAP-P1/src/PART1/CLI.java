@@ -266,6 +266,7 @@ public class CLI {
 									f = new File(line);
 									try {
 										f.createNewFile();
+										sys = new MailSystem(line);
 										break fileNameLoop;
 									} catch (IOException e) {
 										System.out.println("Error, can't create the new file");

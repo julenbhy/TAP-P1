@@ -1,3 +1,2 @@
-aa;aa;hola;asdfdgf
-aa;aa;otro;body
-aa;bb;quetal;?.,/mhy
+aa;bb;hola;quetal estas?;Thu Dec 24 11:46:54 CET 2020
+aa;aa;hola a mi mismo;quetal estoy?;Thu Dec 24 11:47:17 CET 2020

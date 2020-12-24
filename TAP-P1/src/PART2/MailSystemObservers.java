@@ -1,7 +1,7 @@
 /**
  * 
  */
-package PART1;
+package PART2;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,11 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import PART1.*;
+
 /**
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
  */
-public class MailSystem {
+public class MailSystemObservers {
 	
 	private List<User> users;
 	private List<MailBox> mailBoxes;
@@ -27,7 +29,7 @@ public class MailSystem {
 	/**
 	 * constructor for MailSystem using normal MailStore
 	 */
-	public MailSystem() {
+	public MailSystemObservers() {
 		users = new ArrayList<User>();
 		mailBoxes = new ArrayList<MailBox>();
 		mailStore = new MailStoreMem();
@@ -40,7 +42,7 @@ public class MailSystem {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public MailSystem(String fileName) {
+	public MailSystemObservers(String fileName) {
 		mailStore = new MailStoreFile(fileName);
 		users = new ArrayList<User>();
 		mailBoxes = new ArrayList<MailBox>();
@@ -57,7 +59,7 @@ public class MailSystem {
 	public MailBox createUser(String userName, String name, int yearOfBirth) {
 		User user = new User(userName.toLowerCase(), name.toLowerCase(), yearOfBirth);
 		if(!this.userExists(userName)) {
-			MailBox mailBox = new MailBox(user, mailStore);
+			MailBox mailBox = new ObservableMailBox(user, mailStore);
 			users.add(user);
 			mailBoxes.add(mailBox);
 			return mailBox;

@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
  * @author Alberto Iglesias Burgos
  */
 public class MailBox implements Iterable<Message>{
-	private User user;
-	private MailStore mailStore;
-	private List<Message> messages;
+	protected User user;
+	protected MailStore mailStore;
+	protected List<Message> messages;
 	
 	
 	/**
@@ -78,7 +78,7 @@ public class MailBox implements Iterable<Message>{
 			this.mailStore.sendMail(new Message(this.user.getUserName(), destination, subject, body));
 		}
 		catch(Exception e) {
-			System.out.println("Can't update, the file is not found");
+			System.out.println("Can't send mail, the file is not found");
 		}
 		
 	}

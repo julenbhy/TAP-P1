@@ -4,6 +4,7 @@
 package PART1;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,7 +33,7 @@ public class MailStoreFile implements MailStore{
 	@Override
 	public void sendMail(Message mail) throws IOException{
 		bw = new BufferedWriter(new FileWriter(fileName, true));
-	    bw.write(mail.getSender()+";"+mail.getReceiver()+";"+mail.getSubject()+";"+mail.getBody());
+	    bw.write(mail.getSender()+";"+mail.getReceiver()+";"+mail.getSubject()+";"+mail.getBody()+";"+mail.getDate());
 	    bw.newLine();
 	    bw.close();
 	}
@@ -43,10 +44,14 @@ public class MailStoreFile implements MailStore{
 	public List<Message> getMails(String user) throws FileNotFoundException{
 		sc = new Scanner(new File(fileName));
 		List<Message> result = new ArrayList<>();
-		while(sc.hasNext()) {
-			String line[] = sc.next().split(";"); //obtain the next line and split it
+		while(sc.hasNextLine()) {
+			String[] line = sc.nextLine().split(";"); //obtain the next line and split it
 			if(line[1].toLowerCase().equals(user.toLowerCase()))
-						result.add(new Message(line[0], line[1], line[2], line[3]));	//sender;receiver;subject;body
+				try {
+					result.add(new Message(line[0], line[1], line[2], line[3], line[4])); //sender;receiver;subject;body;date
+				} catch (ParseException e) {
+					System.out.println("Error, can't convert date from file to message");
+				}	
 		}
 		sc.close();
 		return result;
@@ -57,9 +62,13 @@ public class MailStoreFile implements MailStore{
 	public List<Message> getAllMessages() throws FileNotFoundException{
 		sc = new Scanner(new File(fileName));
 		List<Message> result = new ArrayList<>();
-		while(sc.hasNext()) {
-			String line[] = sc.next().split(";"); //obtain the next line and split it
-			result.add(new Message(line[0], line[1], line[2], line[3]));	//sender;receiver;subject;body
+		while(sc.hasNextLine()) {
+			String[] line = sc.nextLine().split(";"); //obtain the next line and split it
+			try {
+				result.add(new Message(line[0], line[1], line[2], line[3], line[4])); //sender;receiver;subject;body;date
+			} catch (ParseException e) {
+				System.out.println("Error, can't convert date from file to message");
+			}
 		}
 		sc.close();
 		return result;

@@ -3,7 +3,11 @@
  */
 package PART1;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Julen Bohoyo Bengoetxea
@@ -28,6 +32,24 @@ public class Message {
 		this.subject = subject;
 		this.body = body;
 		this.date = new Date(System.currentTimeMillis());
+	}
+	
+	/**
+	 * 
+	 * @param sender userName
+	 * @param receiver userName
+	 * @param subject
+	 * @param body
+	 * @param date
+	 * @throws ParseException 
+	 */
+	public Message( String sender, String receiver, String subject, String body, String dateString) throws ParseException {
+		this.sender = sender;
+		this.receiver = receiver;
+		this.subject = subject;
+		this.body = body;
+		DateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH);
+		this.date = format.parse(dateString);
 	}
 	
 	
