@@ -1,4 +1,4 @@
-package PART2;
+package PART2.Decorator;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,21 +11,16 @@ import PART1.Message;
 //dos implementaciones gracias a strategi, strategi se suele hacer con interface, pero como ahora lo harermos dentro de un 
 //decorator pues tenemos que usar una abstract class.
 //en este enlace explican justo esto https://stackoverflow.com/questions/25098726/using-an-abstract-class-instead-of-the-interface-in-the-strategy-design-pattern
-public abstract class WrapperForTheMailStore extends MailStore{
+public abstract class WrapperForTheMailStore implements MailStore{
 	
-	private MailStore client;
+	protected MailStore client;
 	
 	public WrapperForTheMailStore(MailStore client) {
 		super();
 		this.client = client;
 	}
 
-	public void sendMail(Message mail) throws IOException
-	{
-		StringBuilder output = new StringBuilder(mail.getBody()).reverse();
-		Message result = new Message(mail.getSender(), mail.getReceiver(), mail.getSubject(), output.toString());
-		client.sendMail(result);
-	}
-
+	public abstract void sendMail(Message mail) throws IOException;
+	
 	public abstract List<Message> getMails(String user) throws FileNotFoundException;
 }

@@ -1,4 +1,4 @@
-package PART2;
+package PART2.Observer;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

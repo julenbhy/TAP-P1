@@ -5,6 +5,7 @@ package PART2;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,14 +14,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import javax.crypto.NoSuchPaddingException;
 import PART1.*;
+import PART2.Decorator.*;
+import PART2.Observer.ObservableMailBox;
 
 /**
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
  */
-public class MailSystemObservers {
+public class MailSystemPart2 {
 	
 	private List<User> users;
 	private List<MailBox> mailBoxes;
@@ -29,7 +32,7 @@ public class MailSystemObservers {
 	/**
 	 * constructor for MailSystem using normal MailStore
 	 */
-	public MailSystemObservers() {
+	public MailSystemPart2() {
 		users = new ArrayList<User>();
 		mailBoxes = new ArrayList<MailBox>();
 		mailStore = new MailStoreMem();
@@ -42,12 +45,29 @@ public class MailSystemObservers {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public MailSystemObservers(String fileName) {
+	public MailSystemPart2(String fileName) {
 		mailStore = new MailStoreFile(fileName);
 		users = new ArrayList<User>();
 		mailBoxes = new ArrayList<MailBox>();
+		
 	}
 	
+	/**
+	 * 
+	 */
+	public void ReverseEncrypted() {
+		mailStore = new ReverseEncrypted(mailStore);
+	}
+	
+	
+	public void CipherEncrypted() {
+		try {
+			mailStore = new CipherEncrypted(mailStore);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+			System.out.println("Error: can't encrypt the mail store");
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 

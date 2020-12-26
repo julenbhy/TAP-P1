@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import PART1.*;
+import PART2.Observer.*;
 
 
 
@@ -27,7 +28,7 @@ public class UnitTest2 {
 		// TODO Auto-generated method stub
 
 		//Step 1: Initialize the mail system
-		MailSystemObservers mSystem = new MailSystemObservers();
+		MailSystemPart2 mSystem = new MailSystemPart2();
 		//Step 2: Create 3 users
 		MailBox albigle = mSystem.createUser("Albigle", "Alberto", 1999);
 		ObservableMailBox julenbhy = (ObservableMailBox) mSystem.createUser("Julenbhy", "Julen", 1899);
@@ -124,7 +125,7 @@ public class UnitTest2 {
 		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
-
+		mSystem.getAllMessages();
 	}
 
 }
