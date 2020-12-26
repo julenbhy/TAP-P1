@@ -11,7 +11,7 @@ public class TooLongFilter extends SpamObserver{
 	@Override
 	public void update(List<Message> messages, List<Message> spam) {
 		for(Message msg:messages) {
-			if(msg.getBody().split("\\s+").length > MAXLENGTH) {
+			if((msg.getBody().split("\\s+").length > MAXLENGTH) && !spam.contains(msg)) {
 				spam.add(msg);
 			}
 		}

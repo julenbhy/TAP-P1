@@ -23,7 +23,7 @@ import PART2.Observer.ObservableMailBox;
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
  */
-public class MailSystemPart2 {
+public class MailSystemPart2{
 	
 	private List<User> users;
 	private List<MailBox> mailBoxes;

@@ -24,7 +24,7 @@ public class UnitTest {
 
 		//Step 1: Initialize the mail system
 		MailSystem mSystem = new MailSystem();
-		//Step 2: Create 3 users
+		//Step 2: Create 4 users
 		MailBox albigle = mSystem.createUser("Albigle", "Alberto", 1999);
 		MailBox julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);
 		MailBox albertoChicote = mSystem.createUser("AlbertoChicote", "Alberto", 1969);
@@ -40,13 +40,13 @@ public class UnitTest {
 		TimeUnit.SECONDS.sleep(1);
 		albertoChicote.sendMail("Julenbhy", "subject", "otro body para julen");
 		TimeUnit.SECONDS.sleep(1);
-		albertoChicote.sendMail("Julenbhy", "non subject", "Hola, gracias por ser mi fan n� 1 :)");
+		albertoChicote.sendMail("Julenbhy", "non subject", "Hola, gracias por ser mi fan numero 1 :)");
 		TimeUnit.SECONDS.sleep(1);
 		julenbhy.sendMail("Albigle", "Hola", "Muy buenas");
 		TimeUnit.SECONDS.sleep(1);
 		albigle.sendMail("AlbertoChicote", "subject", "Body para chicote");
 		TimeUnit.SECONDS.sleep(1);
-		albertoCFC.sendMail("AlbertoChicote", "Somos tus fans", "Somos tus fans n� 1 nos sigues xfaa");
+		albertoCFC.sendMail("AlbertoChicote", "Somos tus fans", "Somos tus fans numero 1 nos sigues xfaa");
 		TimeUnit.SECONDS.sleep(1);
 		albertoCFC.sendMail("AlbertoChicote", "Felicidades Alberto", "Nos gusta mucho pesadilla en la cocina");
 		TimeUnit.SECONDS.sleep(1);

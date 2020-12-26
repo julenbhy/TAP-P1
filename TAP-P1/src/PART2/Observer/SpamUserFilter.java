@@ -21,7 +21,7 @@ public class SpamUserFilter extends SpamObserver{
 	@Override
 	public void update(List<Message> messages, List<Message> spam) {
 		for(Message msg:messages) {
-			if(msg.getSender().equals(userName)) {
+			if(msg.getSender().contains(userName) && !spam.contains(msg)) {
 				spam.add(msg);
 			}
 		}

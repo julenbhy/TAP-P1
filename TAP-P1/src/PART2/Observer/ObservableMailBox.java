@@ -39,4 +39,14 @@ public class ObservableMailBox extends MailBox{
 			System.out.println("Can't update, the file is not found");
 		}
 	}
+
+	/**
+	 * 
+	 * @return spam list
+	 */
+	public List<Message> getSpam() {
+		return spam;
+	}
+	
+	
 }
