@@ -23,8 +23,10 @@ public class SpamUserFilter extends SpamObserver{
 		for(Message msg:messages) {
 			if(msg.getSender().equals(userName)) {
 				spam.add(msg);
-				messages.remove(msg);
 			}
+		}
+		for(Message msg:spam) {
+			messages.remove(msg);
 		}
 	}
 

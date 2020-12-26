@@ -27,10 +27,10 @@ public class UnitTest2 {
 		// TODO Auto-generated method stub
 
 		//Step 1: Initialize the mail system
-		MailSystem mSystem = new MailSystem();
+		MailSystemObservers mSystem = new MailSystemObservers();
 		//Step 2: Create 3 users
 		MailBox albigle = mSystem.createUser("Albigle", "Alberto", 1999);
-		MailBox julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);
+		ObservableMailBox julenbhy = (ObservableMailBox) mSystem.createUser("Julenbhy", "Julen", 1899);
 		MailBox albertoChicote = mSystem.createUser("AlbertoChicote", "Alberto", 1969);
 		MailBox albertoCFC = mSystem.createUser("AlbertoChicoteFansClub", "FansClub", 2007);
 		//Step 3: send a few email
@@ -119,7 +119,11 @@ public class UnitTest2 {
 		System.out.println();
 		
 		julenbhy.addObserver(new TooLongFilter());
-	
+		julenbhy.addObserver(new SpamUserFilter("albigle"));
+		julenbhy.updateMail();
+		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
+		
 
 	}
 

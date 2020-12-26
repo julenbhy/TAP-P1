@@ -13,8 +13,11 @@ public class TooLongFilter extends SpamObserver{
 		for(Message msg:messages) {
 			if(msg.getBody().split("\\s+").length > MAXLENGTH) {
 				spam.add(msg);
-				messages.remove(msg);
 			}
 		}
+		for(Message msg:spam) {
+			messages.remove(msg);
+		}
 	}
+
 }
