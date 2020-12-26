@@ -26,24 +26,12 @@ public class MailSystem {
 
 	/**
 	 * constructor for MailSystem using normal MailStore
+	 * @param mailStore
 	 */
-	public MailSystem() {
-		users = new ArrayList<User>();
-		mailBoxes = new ArrayList<MailBox>();
-		mailStore = new MailStoreMem();
-	}
-	
-	
-	/**
-	 * constructor for MailSystem using MailStoreFile
-	 * @param fileName
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
-	public MailSystem(String fileName) {
-		mailStore = new MailStoreFile(fileName);
-		users = new ArrayList<User>();
-		mailBoxes = new ArrayList<MailBox>();
+	public MailSystem(MailStore mailStore) {
+		this.users = new ArrayList<User>();
+		this.mailBoxes = new ArrayList<MailBox>();
+		this.mailStore = mailStore;
 	}
 	
 	

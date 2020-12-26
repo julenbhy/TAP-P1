@@ -6,7 +6,7 @@ package PART2;
 import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
-
+import PART1.*;
 import PART2.Observer.*;
 
 
@@ -26,7 +26,8 @@ public class UnitTestObservers {
 	public static void main(String[] args) throws InterruptedException, ParseException {
 		// TODO Auto-generated method stub
 
-		MailSystemPart2 mSystem = new MailSystemPart2();
+		MailStore mailStore = new MailStoreMem();
+		MailSystemPart2 mSystem = new MailSystemPart2(mailStore);
 	
 		ObservableMailBox albigle = (ObservableMailBox) mSystem.createUser("Albigle", "Alberto", 1999);
 		ObservableMailBox julenbhy = (ObservableMailBox) mSystem.createUser("Julenbhy", "Julen", 1899);
@@ -48,7 +49,7 @@ public class UnitTestObservers {
 		TimeUnit.SECONDS.sleep(1);
 		julenbhy.sendMail("Albigle", "Hola", "Muy buenas");
 		TimeUnit.SECONDS.sleep(1);
-		albigle.sendMail("AlbertoChicote", "Problemas en la cocina", "Buenos dias Alberto, actualmente llevo un restaurante que no esta funcionando muy bien podrías ayudarme a sacarlo adelante, sino me arruinare en menos de un mes. AYUDA");
+		albigle.sendMail("AlbertoChicote", "Problemas en la cocina", "Buenos dias Alberto, actualmente llevo un restaurante que no esta funcionando muy bien podrï¿½as ayudarme a sacarlo adelante, sino me arruinare en menos de un mes. AYUDA");
 		TimeUnit.SECONDS.sleep(1);
 		albertoCFC.sendMail("AlbertoChicote", "Somos tus fans", "Somos tus fans numero 1 nos sigues xfaa");
 		TimeUnit.SECONDS.sleep(1);

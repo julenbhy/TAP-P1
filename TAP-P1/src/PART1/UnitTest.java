@@ -23,7 +23,8 @@ public class UnitTest {
 		// TODO Auto-generated method stub
 
 		//Step 1: Initialize the mail system
-		MailSystem mSystem = new MailSystem();
+		MailStore mailStore = new MailStoreMem();
+		MailSystem mSystem = new MailSystem(mailStore);
 		//Step 2: Create 4 users
 		MailBox albigle = mSystem.createUser("Albigle", "Alberto", 1999);
 		MailBox julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);
@@ -117,7 +118,8 @@ public class UnitTest {
 		
 		
 		//Step 16.1: Now change the mail store to the file implementation.
-		mSystem = new MailSystem("unitTestFile.txt");
+		mailStore = new MailStoreFile("unitTestFile.txt");
+		mSystem = new MailSystem(mailStore);
 		//Step 16.2: Create 3 users
 		albigle = mSystem.createUser("Albigle", "Alberto", 1999);
 		julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);

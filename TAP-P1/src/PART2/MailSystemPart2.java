@@ -4,7 +4,6 @@
 package PART2;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,26 +30,14 @@ public class MailSystemPart2{
 
 	/**
 	 * constructor for MailSystem using normal MailStore
+	 * @mailStore
 	 */
-	public MailSystemPart2() {
-		users = new ArrayList<User>();
-		mailBoxes = new ArrayList<MailBox>();
-		mailStore = new MailStoreMem();
+	public MailSystemPart2(MailStore mailStore) {
+		this.users = new ArrayList<User>();
+		this.mailBoxes = new ArrayList<MailBox>();
+		this.mailStore = mailStore;
 	}
 	
-	
-	/**
-	 * constructor for MailSystem using MailStoreFile
-	 * @param fileName
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
-	public MailSystemPart2(String fileName) {
-		mailStore = new MailStoreFile(fileName);
-		users = new ArrayList<User>();
-		mailBoxes = new ArrayList<MailBox>();
-		
-	}
 	
 	/**
 	 * 

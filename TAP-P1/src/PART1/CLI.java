@@ -18,6 +18,7 @@ public class CLI {
 	static Scanner sc;
 	static String[] command;
 	static MailSystem sys;
+	static MailStore mailStore;
 	
 	/**
 	 * @param args
@@ -246,14 +247,16 @@ public class CLI {
 			line = sc.nextLine();
 			switch (line) {
 			
-				case "memory":		sys = new MailSystem();
+				case "memory":		mailStore = new MailStoreMem();
+									sys = new MailSystem(mailStore);
 									break fileNameLoop;
 								
 				case "file":		System.out.println("Introduce file name: ");
 									line = sc.nextLine();
 									f = new File(line);
 									if(f.exists()) {
-										sys = new MailSystem(line);
+										mailStore = new MailStoreFile(line);
+										sys = new MailSystem(mailStore);
 										break fileNameLoop;
 									} 
 									else{
@@ -266,7 +269,8 @@ public class CLI {
 									f = new File(line);
 									try {
 										f.createNewFile();
-										sys = new MailSystem(line);
+										mailStore = new MailStoreFile(line);
+										sys = new MailSystem(mailStore);
 										break fileNameLoop;
 									} catch (IOException e) {
 										System.out.println("Error, can't create the new file");

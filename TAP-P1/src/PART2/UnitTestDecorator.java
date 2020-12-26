@@ -26,7 +26,8 @@ public class UnitTestDecorator {
 	public static void main(String[] args) throws InterruptedException, ParseException {
 		// TODO Auto-generated method stub
 
-		MailSystemPart2 mSystem = new MailSystemPart2("unitTestFile2.txt");
+		MailStore mailStore = new MailStoreFile("unitTestFile2.txt");
+		MailSystemPart2 mSystem = new MailSystemPart2(mailStore);
 		mSystem.ReverseEncrypted();
 		mSystem.CipherEncrypted();
 		
