@@ -59,54 +59,54 @@ public class UnitTestObservers {
 		
 		System.out.println("  - Julen Bohoyo's mailbox");
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\n  - Julen Bohoyo's spam mailbox");
-		julenbhy.getSpam().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.getSpam().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\n- Filter messages with a body with more than 20 characters\n  - Julen Bohoyo's mailbox");
 		julenbhy.addObserver(new TooLongFilter());
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\n  - Julen Bohoyo's spam mailbox");
-		julenbhy.getSpam().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.getSpam().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\n- Filter messages whose sender username is albigle\n  - Julen Bohoyo's mailbox");
 		julenbhy.addObserver(new SpamUserFilter("albigle"));
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\n  - Julen Bohoyo's spam mailbox");
-		julenbhy.getSpam().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.getSpam().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("  - Alberto Chicote's mailbox");
 		albertoChicote.updateMail();
-		albertoChicote.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albertoChicote.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\n  - Alberto Chicote's spam mailbox");
-		albertoChicote.getSpam().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albertoChicote.getSpam().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\n- Filter messages with a body with more than 20 characters\n  - Alberto Chicote's mailbox");
 		albertoChicote.addObserver(new TooLongFilter());
 		albertoChicote.updateMail();
-		albertoChicote.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albertoChicote.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\n  - Alberto Chicote's spam mailbox");
-		albertoChicote.getSpam().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albertoChicote.getSpam().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\n- Filter messages whose sender username contains fansclub word\n  - Alberto Chicote's mailbox");
 		albertoChicote.addObserver(new SpamUserFilter("fansclub"));
 		albertoChicote.updateMail();
-		albertoChicote.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albertoChicote.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\n  - Alberto Chicote's spam mailbox");
-		albertoChicote.getSpam().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albertoChicote.getSpam().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 	}

@@ -62,13 +62,13 @@ public class UnitTestDecorator {
 		
 		System.out.println("  - Julen Bohoyo's mailbox");
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
 		System.out.println("\n  - Julen Bohoyo's mailbox after reverse encription");
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		

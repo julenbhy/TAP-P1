@@ -58,41 +58,41 @@ public class UnitTest {
 		albigle.updateMail();	//update sorts by time by default
 		System.out.println("\nStep 5: list the mailbox messages");
 		System.out.println(" - albigle's mailbox");
-		albigle.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albigle.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" - julenbhy's mailbox");
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
 		System.out.println("\nStep 6: list the messages by sender\n - julenbhy's mailbox filter by mails received from albigle");
-		julenbhy.filterBy("sender", "Albigle").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("sender", "Albigle").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
 		System.out.println("\nStep 7: filter the messages");
 		System.out.println(" - The message subject contains 'subjetc' word");
-		julenbhy.filterBy("subject", "subject").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("subject", "subject").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The message sender is a certain user");
 		System.out.println("   - julenbhy's mailbox filter by mails received from albigle");
-		julenbhy.filterBy("sender", "Albigle").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("sender", "Albigle").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("   - julenbhy's mailbox filter by mails received from AlbertoChicote");
-		julenbhy.filterBy("sender", "AlbertoChicote").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("sender", "AlbertoChicote").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 			
 		System.out.println("\nStep 8: use the mail system object to retrieve all messages and print them");
-		mSystem.getAllMessages().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.getAllMessages().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 														"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\nStep 9: filter messages globally that fulfill the following conditions");
 		System.out.println(" - The message subject is a single word, aka there are less than 2 words");
-		mSystem.filterBy("subjectlessthan", "2").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.filterBy("subjectlessthan", "2").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The sender was born after year 2000");
-		mSystem.filterBy("senderafter", "2000").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.filterBy("senderafter", "2000").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 
 		System.out.println("\nStep 10: get the count of messages in the system and print it");
@@ -153,47 +153,47 @@ public class UnitTest {
 		albigle.updateMail();	//update sorts by time by default
 		System.out.println("\nStep  16.5: list the mailbox messages");
 		System.out.println(" - albigle's mailbox");
-		albigle.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		albigle.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" - julenbhy's mailbox");
 		julenbhy.updateMail();
-		julenbhy.listMail().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
 		System.out.println("\nStep  16.6: list the messages by sender\n - julenbhy's mailbox filter by mails received from albigle");
-		julenbhy.filterBy("sender", "Albigle").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("sender", "Albigle").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
 		System.out.println("\nStep  16.7: filter the messages");
 		System.out.println(" - The message subject contains 'subjetc' word");
-		julenbhy.filterBy("subject", "subject").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("subject", "subject").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The message sender is a certain user");
 		System.out.println("   - julenbhy's mailbox filter by mails received from albigle");
-		julenbhy.filterBy("sender", "Albigle").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		julenbhy.filterBy("sender", "Albigle").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("   - julenbhy's mailbox filter by mails received from AlbertoChicote");
 		julenbhy.filterBy("sender", "AlbertoChicote").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 			
 		System.out.println("\nStep  16.8: use the mail system object to retrieve all messages and print them");
-		mSystem.getAllMessages().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.getAllMessages().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 														"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\nStep  16.9: filter messages globally that fulfill the following conditions");
 		System.out.println(" - The message subject is a single word, aka there are less than 2 words");
-		mSystem.filterBy("subjectlessthan", "2").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.filterBy("subjectlessthan", "2").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The sender was born after year 2000");
-		mSystem.filterBy("senderafter", "2000").stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.filterBy("senderafter", "2000").forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 
 		System.out.println("\nStep  16.10: get the count of messages in the system and print it");
 		System.out.println("Number of messages at the system: "+mSystem.messageAmount());
 		System.out.println("Messages:");
-		mSystem.getAllMessages().stream().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		mSystem.getAllMessages().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 
 		System.out.println("\nStep  16.11: get the average number of messages received per user and print it");
