@@ -73,8 +73,9 @@ public class UnitTest3 {
 		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
-		System.out.println("Ahora todos los meesage");
-		mSystem.getAllMessages();
+		System.out.println("\n  - All the messages from de mail system");
+		mSystem.getAllMessages().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+					"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
 		
