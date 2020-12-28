@@ -4,6 +4,7 @@
 package PART1;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * @author Julen Bohoyo Bengoetxea
@@ -77,8 +80,11 @@ public class MailBox implements Iterable<Message>{
 		try {
 			this.mailStore.sendMail(new Message(this.user.getUserName(), destination, subject, body));
 		}
-		catch(Exception e) {
+		catch(IOException e) {
 			System.out.println("Can't send mail, the file is not found");
+		}
+		catch(JedisConnectionException e) {
+			System.out.println("Can't connect to server");
 		}
 		
 	}
