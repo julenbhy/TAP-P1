@@ -62,15 +62,15 @@ public class UnitTest3 {
 		TimeUnit.SECONDS.sleep(1);
 		albertoCFC.sendMail("JulenBhy", "Bienvenido Julen", "Gracias por formar parte del club");
 		
-		System.out.println("  - Julen Bohoyo's mailbox");
+		System.out.println("  - JulenBhy's mailbox");
 		julenbhy.updateMail();
 		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		
-		System.out.println("\n  - Julen Bohoyo's mailbox after reverse encription");
-		julenbhy.updateMail();
-		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
+		System.out.println("  - Albigles's mailbox");
+		albigle.updateMail();
+		albigle.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\n  - All the messages from de mail system");
