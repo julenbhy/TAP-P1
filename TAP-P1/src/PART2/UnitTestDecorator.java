@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
 import PART1.*;
+import redis.clients.jedis.Jedis;
 
 
 
@@ -71,6 +72,10 @@ public class UnitTestDecorator {
 		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
+		Jedis jedis = new Jedis("localhost");
+		System.out.println(jedis.info());
+		System.out.println(jedis.ping());
+		jedis.close();
 		
 	}
 
