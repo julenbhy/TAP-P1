@@ -27,8 +27,8 @@ public class Message {
 	 * @param body
 	 */
 	public Message( String sender, String receiver, String subject, String body) {
-		this.sender = sender;
-		this.receiver = receiver;
+		this.sender = sender.toLowerCase();
+		this.receiver = receiver.toLowerCase();
 		this.subject = subject;
 		this.body = body;
 		this.date = new Date(System.currentTimeMillis());

@@ -73,14 +73,8 @@ public class UnitTest3 {
 		julenbhy.listMail().forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
-		
-		
-		Jedis jedis = new Jedis("localhost");
-		jedis.del("hola");
-		jedis.lpush("hola", "value");
-		jedis.lpush("hola", "value1");
-		jedis.lpush("hola", "value2");
-		System.out.println(jedis.lrange("hola", 0, -1));
+		System.out.println("Ahora todos los meesage");
+		mSystem.getAllMessages();
 		
 		
 		
