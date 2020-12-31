@@ -46,7 +46,7 @@ public class MailSystemPart4 {
 		Annotation annotation = obj.getAnnotation(Config.class);
         Config copy = (Config) annotation;
         Class aClass =Class.forName(copy.store());
-        Object newObject = aClass.newInstance();
+        Object newObject = aClass.getConstructors();
         this.mailStore = (MailStore)newObject;
 	}
 	

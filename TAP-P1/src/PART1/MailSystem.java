@@ -9,9 +9,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -134,42 +136,13 @@ public class MailSystem {
 	 * @return
 	 */
 	
-	public List<Message> sortBy(String condition){
-		switch(condition){
-		
-		case "newer": 
-			List<Message> result = this.getAllMessages().stream()
-														.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
-														.collect(Collectors.toList());
-			Collections.reverse(result);	
-			return result;
-			
-			
-		case "older": 
-			return this.getAllMessages().stream()
-										.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
-										.collect(Collectors.toList());
-			
-			
-		case "a-z":
-			return this.getAllMessages().stream()
-										.sorted((o1,o2) -> o1.getSender().compareTo(o2.getSender()))
-										.collect(Collectors.toList());
-			
-			
-		case "z-a":
-			List<Message> resultAZ = this.getAllMessages().stream()
-															.sorted((o1,o2) -> o1.getSender().compareTo(o2.getSender()))
-															.collect(Collectors.toList());
-			Collections.reverse(resultAZ);	
-			return resultAZ;
-			
-		
-		default: return null;
-		}
+	public List<Message> sortBy(Comparator<Message> comparator){
+		return this.getAllMessages().stream().sorted(comparator).collect(Collectors.toList());
 	}
 	
-	
+	public List<Message> filterBy(Predicate<Message> predicate){
+		return this.getAllMessages().stream().filter(predicate).collect(Collectors.toList());
+	}
 	
 	
 	/**
@@ -180,6 +153,7 @@ public class MailSystem {
 	 * @return the filtered list
 	 * @throws ParseException 
 	 */
+	/*
 	public List<Message> filterBy(String condition, String word) throws ParseException, NumberFormatException{
 
 		Date date;
@@ -258,6 +232,7 @@ public class MailSystem {
 		default: return null;
 		}
 	}
+	*/
 	
 	
 	/**

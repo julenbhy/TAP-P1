@@ -6,8 +6,12 @@ package PART1;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author Julen Bohoyo Bengoetxea
@@ -65,20 +69,173 @@ public class CLI {
 							        }
 									System.out.println("The user: "+command[1]+", named: "+command[2]+" has been created successfully");
 									break;
+									
+				case "sort":		System.out.println("Select a sort option: newer, older, a-z, z-a");
+									Comparator<Message> comparator;
+									switch(sc.nextLine()){
+										case "newer":
+											comparator = (o1, o2) -> o2.getDate().compareTo(o1.getDate());
+											sys.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "older":
+											comparator = (o1, o2) -> o1.getDate().compareTo(o2.getDate());
+											sys.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "a-z":
+											comparator = (o1, o2) -> o1.getSender().compareTo(o2.getSender());
+											sys.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "z-a":
+											comparator = ( o1, o2) -> o2.getSender().compareTo(o1.getSender());
+											sys.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										default: System.out.println("Not a valid option");
+												 break;
+									}
+									break;
 										
 					
-				case "filter":		if(command.length != 3) {	//checks if the number of arguments is correct
-										System.out.println("Error: Incorrect args");
-										break;
+				case "filter":		System.out.println("Select a filter option: sender, subject, body, after, before,"
+													+ " bodylessthan, bodymorethan, subjectlessthan, subjectmorethan");
+									Date date;
+									int number;
+									Predicate<Message> predicate;
+									switch(sc.nextLine()){
+										case "sender": 
+											System.out.println("Introduce the target username: ");
+											predicate = o -> o.getSender().equals(sc.nextLine());
+											sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "receiver": 
+											System.out.println("Introduce the target username: ");
+											predicate = o -> o.getReceiver().equals(sc.nextLine());
+											sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "subject":
+											System.out.println("Introduce the target word: ");
+											predicate = o -> o.getSubject().contains(sc.nextLine());
+											sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "body": 
+											System.out.println("Introduce the target word: ");
+											predicate = o -> o.getBody().contains(sc.nextLine());
+											sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "after":
+											System.out.println("Introduce the target date (dd/mm/yyyy): ");
+											try {
+												date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+												predicate = o -> o.getDate().after(date);
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (ParseException e) {
+												System.out.println("Error: Incorrect date format");
+											}
+											break;
+								
+										case "before": 
+											System.out.println("Introduce the target date (dd/mm/yyyy): ");
+											try {
+												date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+												predicate = o -> o.getDate().before(date);
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (ParseException e) {
+												System.out.println("Error: Incorrect date format");
+											}
+											break;
+											
+										case "bodylessthan":
+											System.out.println("Introduce the maximum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getBody().split("\\s+").length < number;
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "bodymorethan":
+											System.out.println("Introduce the minimum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getBody().split("\\s+").length > number;
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "subjectlessthan":
+											System.out.println("Introduce the maximum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getSubject().split("\\s+").length < number;
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "subjectmorethan":
+											System.out.println("Introduce the minimum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getSubject().split("\\s+").length > number;
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "senderafter":
+											System.out.println("Introduce the minimum year: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getYearOfBirth() >= number;
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "senderbefore":
+											System.out.println("Introduce the maximum year: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getYearOfBirth() < number;
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										default: System.out.println("Not a valid option");
+												 break;
 									}
-									try {
-										sys.filterBy(command[1], command[2]).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
-																									s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
-									} catch (ParseException e) {
-										System.out.println("Error: Incorrect date format");
-									}catch (NumberFormatException e) {
-							        	System.out.println("Error: Incorrect number format");
-							        }
 									break;
 									
 									
@@ -91,7 +248,7 @@ public class CLI {
 										System.out.println("Error: The user does't exist");
 										break;
 									}
-									System.out.println("You has logged as: "+command[1]);
+									System.out.println("You has logged as: "+command[1]+" type 'help' for showing options");
 									userLoop(command[1]);
 									break;
 									
@@ -121,7 +278,6 @@ public class CLI {
 			
 			command = sc.nextLine().split(" ");
 					
-			
 			switch (command[0]) {
 				case "help":	printUserOps();
 								break;
@@ -162,15 +318,144 @@ public class CLI {
 																s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 									break;
 					
-				case "sort":		if(command.length != 2) {	//checks if the number of arguments is correct
-										System.out.println("Error: Incorrect args");
-										break;
+				case "sort":		System.out.println("Select a sort option: newer, older, a-z, z-a");
+									Comparator<Message> comparator;
+									switch(sc.nextLine()){
+										case "newer":
+											comparator = (o1, o2) -> o2.getDate().compareTo(o1.getDate());
+											mBox.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "older":
+											comparator = (o1, o2) -> o1.getDate().compareTo(o2.getDate());
+											mBox.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "a-z":
+											comparator = (o1, o2) -> o1.getSender().compareTo(o2.getSender());
+											mBox.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "z-a":
+											comparator = ( o1, o2) -> o2.getSender().compareTo(o1.getSender());
+											mBox.sortBy(comparator).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										default: System.out.println("Not a valid option");
+												 break;
 									}
-									mBox.sortBy(command[1]).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
-																					s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 									break;
+
 					
-				case "filter":		if(command.length != 3) {	//checks if the number of arguments is correct
+				case "filter":		System.out.println("Select a filter option: sender, subject, body, after, before,"
+														+ " bodylessthan, bodymorethan, subjectlessthan, subjectmorethan");
+									Date date;
+									int number;
+									Predicate<Message> predicate;
+									switch(sc.nextLine()){
+										case "sender": 
+											System.out.println("Introduce the target username: ");
+											predicate = o -> o.getSender().equals(sc.nextLine());
+											mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "subject":
+											System.out.println("Introduce the target word: ");
+											predicate = o -> o.getSubject().contains(sc.nextLine());
+											mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "body": 
+											System.out.println("Introduce the target word: ");
+											predicate = o -> o.getBody().contains(sc.nextLine());
+											mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											break;
+											
+										case "after":
+											System.out.println("Introduce the target date (dd/mm/yyyy): ");
+											try {
+												date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+												predicate = o -> o.getDate().after(date);
+												mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (ParseException e) {
+												System.out.println("Error: Incorrect date format");
+											}
+											break;
+	
+										case "before": 
+											System.out.println("Introduce the target date (dd/mm/yyyy): ");
+											try {
+												date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+												predicate = o -> o.getDate().before(date);
+												mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (ParseException e) {
+												System.out.println("Error: Incorrect date format");
+											}
+											break;
+											
+										case "bodylessthan":
+											System.out.println("Introduce the maximum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getBody().split("\\s+").length < number;
+												mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "bodymorethan":
+											System.out.println("Introduce the minimum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getBody().split("\\s+").length > number;
+												mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "subjectlessthan":
+											System.out.println("Introduce the maximum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getSubject().split("\\s+").length < number;
+												mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "subjectmorethan":
+											System.out.println("Introduce the minimum length: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												predicate = o -> o.getSubject().split("\\s+").length > number;
+												mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										default: System.out.println("Not a valid option");
+												 break;
+									}
+					
+									/*
+									if(command.length != 3) {	//checks if the number of arguments is correct
 										System.out.println("Error: Incorrect args");
 										break;
 									}
@@ -182,6 +467,7 @@ public class CLI {
 									}catch (NumberFormatException e) {
 							        	System.out.println("Error: Incorrect number format");
 							        }
+							        */
 									break;
 						
 				case "logout":		break userLoop;
@@ -195,7 +481,7 @@ public class CLI {
 	
 	public static void printSysOps() {
 		System.out.println("\n\nSys operations: ");
-		System.out.println("createuser <user nickname> <name> <year of birth (yyyy)> : Create a new user as admin");
+		System.out.println("\ncreateuser <user nickname> <name> <year of birth (yyyy)> : Create a new user as admin");
 		System.out.println("\nfilter <filter type> <condition>: Filter at a system level. The program has implemented several conditions for "
 						+ "\nfiltering messages and can be referenced from the command. For instance: "
 						+ "\n\t- sender <word> : filters all messages sent by a sender"
@@ -215,10 +501,10 @@ public class CLI {
 	
 	public static void printUserOps() {
 		System.out.println("\n\nUser operations: ");
-		System.out.println("send <to> : send a new message.");
-		System.out.println("update : retrieve messages from the mail store.");
-		System.out.println("list : show messages sorted by sent time.");
-		System.out.println("sort <> : sort messages by some predefined comparators.");
+		System.out.println("\nsend <to> : send a new message.");
+		System.out.println("\nupdate : retrieve messages from the mail store.");
+		System.out.println("\nlist : show messages sorted by sent time.");
+		System.out.println("\nsort <> : sort messages by some predefined comparators.");
 		System.out.println("\nfilter <filter type> <condition>: Filter at user level. The program has implemented several conditions for "
 						+ "\nfiltering messages and can be referenced from the command. For instance: "
 						+ "\n\t- sender <word> : filters all messages sent by a sender"

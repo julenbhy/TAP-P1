@@ -5,14 +5,15 @@ package PART1;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
 
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
@@ -95,41 +96,8 @@ public class MailBox implements Iterable<Message>{
 	 * @return
 	 */
 	
-	public List<Message> sortBy(String condition){
-		switch(condition){
-		
-		case "newer": 
-			List<Message> result  = this.messages.stream()
-													.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
-													.collect(Collectors.toList());
-			Collections.reverse(result);	
-			return result;
-			
-			
-		case "older": 
-			return this.messages.stream()
-								.sorted((o1,o2) -> o1.getDate().compareTo(o2.getDate()))
-								.collect(Collectors.toList());
-			
-			
-		case "a-z":
-			return this.messages.stream()
-								.sorted((o1,o2) -> o1.getSender().compareTo(o2.getSender()))
-								.collect(Collectors.toList());
-			
-			
-		case "z-a":
-			List<Message> resultAZ =  this.messages.stream()
-											.sorted((o1,o2) -> o1.getSender().compareTo(o2.getSender()))
-											.collect(Collectors.toList());
-			Collections.reverse(resultAZ);	
-			return resultAZ;
-			
-		//añadir mas opciones de ordenacion
-			
-		
-		default: return null;
-		}
+	public List<Message> sortBy(Comparator<Message> comparator){
+		return this.messages.stream().sorted(comparator).collect(Collectors.toList());
 	}
 
 	
@@ -142,8 +110,11 @@ public class MailBox implements Iterable<Message>{
 	 * @return the filtered list
 	 * @throws ParseException 
 	 */
-	public List<Message> filterBy(String condition, String word) throws ParseException{
+	public List<Message> filterBy(Predicate<Message> predicate){
 		
+		return this.messages.stream().filter(predicate).collect(Collectors.toList());
+		
+		/*
 		Date date;
 		int number;
 		
@@ -196,6 +167,7 @@ public class MailBox implements Iterable<Message>{
 			
 		default: return null;
 		}
+		*/
 	}
 	
 
