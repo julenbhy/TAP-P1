@@ -70,7 +70,7 @@ public class UnitTest {
 													"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		
 		System.out.println("\nStep 6: list the messages by sender\n - julenbhy's mailbox filter by mails received from albigle");
-		predicate = o -> o.getSender().equals("Albigle");
+		predicate = o -> o.getSender().equals("albigle");
 		julenbhy.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("\nStep 7: filter the messages");
@@ -80,11 +80,11 @@ public class UnitTest {
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The message sender is a certain user");
 		System.out.println("   - julenbhy's mailbox filter by mails received from albigle");
-		predicate = o -> o.getSender().equals("Albigle");
+		predicate = o -> o.getSender().equals("albigle");
 		julenbhy.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println("   - julenbhy's mailbox filter by mails received from AlbertoChicote");
-		predicate = o -> o.getSender().equals("AlbertoChicote");
+		predicate = o -> o.getSender().equals("albertochicote");
 		julenbhy.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+																				"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 			
 		System.out.println("\nStep 8: use the mail system object to retrieve all messages and print them");
@@ -96,10 +96,10 @@ public class UnitTest {
 		mSystem.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The sender was born after year 2000");
-		predicate = o -> o.getYearOfBirth() >= 2000;
+/*		predicate = o -> o.getYearOfBirth() >= 2000;
 		mSystem.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
-
+*/
 		System.out.println("\nStep 10: get the count of messages in the system and print it");
 		System.out.println("Number of messages at the system: "+mSystem.messageAmount());
 		System.out.println("Messages:");
@@ -193,10 +193,10 @@ public class UnitTest {
 		mSystem.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The sender was born after year 2000");
-		predicate = o -> o.getYearOfBirth() >= 2000;
+/*		predicate = o -> o.getYearOfBirth() >= 2000;
 		mSystem.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
-
+*/
 		System.out.println("\nStep  16.10: get the count of messages in the system and print it");
 		System.out.println("Number of messages at the system: "+mSystem.messageAmount());
 		System.out.println("Messages:");

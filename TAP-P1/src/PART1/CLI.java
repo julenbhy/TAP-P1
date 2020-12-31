@@ -111,14 +111,14 @@ public class CLI {
 									switch(sc.nextLine()){
 										case "sender": 
 											System.out.println("Introduce the target username: ");
-											predicate = o -> o.getSender().equals(sc.nextLine());
+											predicate = o -> o.getSender().equals(sc.nextLine().toLowerCase());
 											sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
 													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 											break;
 											
 										case "receiver": 
 											System.out.println("Introduce the target username: ");
-											predicate = o -> o.getReceiver().equals(sc.nextLine());
+											predicate = o -> o.getReceiver().equals(sc.nextLine().toLowerCase());
 											sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
 													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 											break;
@@ -359,7 +359,7 @@ public class CLI {
 									switch(sc.nextLine()){
 										case "sender": 
 											System.out.println("Introduce the target username: ");
-											predicate = o -> o.getSender().equals(sc.nextLine());
+											predicate = o -> o.getSender().equals(sc.nextLine().toLowerCase());
 											mBox.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
 													s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 											break;
