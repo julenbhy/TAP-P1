@@ -4,7 +4,8 @@
 package PART1;
 
 import java.text.ParseException;
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class UnitTest {
 		MailStore mailStore = new MailStoreMem();
 		MailSystem mSystem = new MailSystem(mailStore);
 		Predicate<Message> predicate;
-		Comparator<Message> comparator;
+		//Comparator<Message> comparator;
 		//Step 2: Create 4 users
 		MailBox albigle = mSystem.createUser("Albigle", "Alberto", 1999);
 		MailBox julenbhy = mSystem.createUser("Julenbhy", "Julen", 1899);
@@ -96,10 +97,12 @@ public class UnitTest {
 		mSystem.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
 		System.out.println(" -  The sender was born after year 2000");
-/*		predicate = o -> o.getYearOfBirth() >= 2000;
+		List<String> senders = new ArrayList<>();
+		mSystem.getUsers().stream().filter(s -> s.getYearOfBirth() >= 2000).forEach(s -> senders.add(s.getUserName())); 
+		predicate = o -> senders.contains(o.getSender());
 		mSystem.filterBy(predicate).forEach(s -> System.out.println("Message from: "+s.getSender()+", to: "+s.getReceiver()+
 																		"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()+"\n\tDate: "+s.getDate()));
-*/
+		
 		System.out.println("\nStep 10: get the count of messages in the system and print it");
 		System.out.println("Number of messages at the system: "+mSystem.messageAmount());
 		System.out.println("Messages:");

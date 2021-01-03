@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Date;
@@ -213,7 +214,9 @@ public class CLI {
 											System.out.println("Introduce the minimum year: ");
 											try{
 												number = Integer.parseInt(sc.nextLine());
-												predicate = o -> o.getYearOfBirth() >= number;
+												List<String> senders = new ArrayList<>();
+												sys.getUsers().stream().filter(s -> s.getYearOfBirth() >= number).forEach(s -> senders.add(s.getUserName())); 
+												predicate = o -> senders.contains(o.getSender());
 												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
 														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 											} catch (NumberFormatException e) {
@@ -225,7 +228,9 @@ public class CLI {
 											System.out.println("Introduce the maximum year: ");
 											try{
 												number = Integer.parseInt(sc.nextLine());
-												predicate = o -> o.getYearOfBirth() < number;
+												List<String> senders = new ArrayList<>();
+												sys.getUsers().stream().filter(s -> s.getYearOfBirth() < number).forEach(s -> senders.add(s.getUserName())); 
+												predicate = o -> senders.contains(o.getSender());
 												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
 														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
 											} catch (NumberFormatException e) {
@@ -470,7 +475,8 @@ public class CLI {
 							        */
 									break;
 						
-				case "logout":		break userLoop;
+				case "logout":		System.out.println("Good bye "+userName+", see you soon :)");
+									break userLoop;
 								
 				default:		System.out.println("Error: command not found");
 			}
