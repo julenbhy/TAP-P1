@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import PART1.*;
 
@@ -23,7 +26,7 @@ import PART1.*;
  */
 
 @Config(
-        store = "PART1.MailStoreMem",
+        store = "PART1.MailStoreFile",
         log = false
 )
 public class MailSystemPart4 {
@@ -39,15 +42,30 @@ public class MailSystemPart4 {
 	public MailSystemPart4() {
 		this.users = new ArrayList<User>();
 		this.mailBoxes = new ArrayList<MailBox>();
+
+		try {
+			this.createMailStore();
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+			System.out.println("Error, can't create new instance");
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error, can't get the constructor");
+		}
+
+
+
 	}
 	
-	public void createMailStore() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public void createMailStore() throws NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Class<MailSystemPart4> obj = MailSystemPart4.class;
 		Annotation annotation = obj.getAnnotation(Config.class);
         Config copy = (Config) annotation;
-        Class aClass =Class.forName(copy.store());
-        Object newObject = aClass.getConstructors();
-        this.mailStore = (MailStore)newObject;
+		Constructor<?> constructor = Class.forName(copy.store()).getConstructors()[0];
+		Object myObj = null;
+		if(copy.store().equals("PART1.MailStoreMem")) myObj = constructor.newInstance();
+		else if(copy.store().equals("PART1.MailStoreFile")) myObj = constructor.newInstance("part4.txt");
+		this.mailStore = (MailStore) myObj;
 	}
 	
 	/**
