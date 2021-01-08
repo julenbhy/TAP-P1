@@ -68,7 +68,10 @@ public class MailSystemPart4 {
 		if(copy.store().equals("PART1.MailStoreMem")) myObj = constructor.newInstance();
 		else if(copy.store().equals("PART1.MailStoreFile")) myObj = constructor.newInstance("part4.txt");
 		else if(copy.store().equals("PART3.MailStoreRedis")) myObj = constructor.newInstance();
-		this.mailStore = (MailStore) myObj;
+		
+		if(copy.log()) this.mailStore = (MailStore) Log.newInstance((MailStore) myObj);
+		else this.mailStore = (MailStore) myObj;
+		
 	}
 	
 	/**
