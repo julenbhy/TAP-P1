@@ -26,7 +26,9 @@ import PART1.*;
  */
 
 @Config(
-        store = "PART1.MailStoreFile",
+        store = "PART1.MailStoreMem",
+      //store = "PART1.MailStoreFile",
+      //store = "PART3.MailStoreRedis",
         log = false
 )
 public class MailSystemPart4 {
@@ -65,6 +67,7 @@ public class MailSystemPart4 {
 		Object myObj = null;
 		if(copy.store().equals("PART1.MailStoreMem")) myObj = constructor.newInstance();
 		else if(copy.store().equals("PART1.MailStoreFile")) myObj = constructor.newInstance("part4.txt");
+		else if(copy.store().equals("PART3.MailStoreRedis")) myObj = constructor.newInstance();
 		this.mailStore = (MailStore) myObj;
 	}
 	
