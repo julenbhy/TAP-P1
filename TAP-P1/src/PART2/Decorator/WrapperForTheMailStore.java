@@ -38,4 +38,11 @@ public abstract class WrapperForTheMailStore implements MailStore{
 	 * @throws FileNotFoundException if the file is not found
 	 */
 	public abstract List<Message> getMails(String user) throws FileNotFoundException;
+	
+	/**
+	 * get all the mails
+	 * @return a List with the mails
+	 * @throws FileNotFoundException if the file is not found
+	 */
+	public abstract List<Message> getAllMessages() throws FileNotFoundException;
 }
