@@ -71,21 +71,6 @@ public class Message {
 	}
 
 
-
-	/**
-	 * checks if the sender war born after a certain year (not included)
-	 * @param year
-	 * @return true if was born later
-	 */
-	/*
-	public boolean checkSendersYear(int year) {
-		return (this.sender.getYearOfBirth() > year); 
-	}
-	*/
-	
-	
-
-
 	/**
 	 * @return the sender
 	 */
@@ -125,7 +110,9 @@ public class Message {
 		return date;
 	}
 
-
+	/**
+	 * Prints the message
+	 */
 	public void printMessage() {
 		System.out.println("Message [sender=" + sender + ", receiver=" + receiver + ", subject=" + subject + ", body=" + body
 				+ ", time=" + date + "]");
