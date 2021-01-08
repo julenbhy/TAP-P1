@@ -20,10 +20,8 @@ public class MailStoreFile implements MailStore{
 	private String fileName;
 
 	/**
-	 * 
-	 * @param fileName
-	 * @throws FileNotFoundException 
-	 * @throws IOException 
+	 * Constructor for the MailStoreFile class
+	 * @param fileName the name of the file to use
 	 */
 	public MailStoreFile(String fileName){
 		this.fileName = fileName;

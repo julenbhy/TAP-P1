@@ -14,22 +14,25 @@ import java.util.List;
 public interface MailStore {
 	
 	/**
-	 * 
-	 * @param mail
+	 * Stores a mail in the MailStore
+	 * @param mail the mail to store
+	 * @throws IOException if the file is not found
 	 */
 	public void sendMail(Message mail)  throws IOException;
 
+
 	/**
-	 * 
-	 * @param user
-	 * @return List with the messages intended for the user
+	 * get all the mails for a certain user
+	 * @param user the certain user
+	 * @return a List with the mails
+	 * @throws FileNotFoundException if the file is not found
 	 */
 	public List<Message> getMails(String user) throws FileNotFoundException;
 	
 	/**
-	 * 
-	 * @return
-	 * @throws FileNotFoundException
+	 * gets all the mail from the system
+	 * @return a List with the mails 
+	 * @throws FileNotFoundException if the file is not found
 	 */
 	public List<Message> getAllMessages() throws FileNotFoundException;
 

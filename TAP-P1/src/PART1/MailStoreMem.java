@@ -6,7 +6,7 @@ package PART1;
 import java.util.ArrayList;
 import java.util.List;
 
-
+ 
 /**
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
@@ -16,7 +16,7 @@ public class MailStoreMem implements MailStore{
 	protected List<Message> messages;
 	
 	/**
-	 * Constructor
+	 * The constructor of the MailSoreMem class
 	 */
 	public MailStoreMem() {
 		this.messages = new ArrayList<Message>();
@@ -37,15 +37,11 @@ public class MailStoreMem implements MailStore{
 		}
 		return result;
 	}
-
 	
 	@Override
 	public List<Message> getAllMessages() {
 		return messages;
 	}
-	
-	
-	
 	
 	
 }

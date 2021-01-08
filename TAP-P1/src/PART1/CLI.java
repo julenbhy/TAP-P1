@@ -26,10 +26,7 @@ public class CLI {
 	static MailStore mailStore;
 	
 	/**
-	 * @param args
-	 * @throws IOException 
-	 * @throws InterruptedException 
-	 * @throws ParseException 
+	 * @param args no args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -277,6 +274,10 @@ public class CLI {
 		sc.close();
 	}
 	
+	/**
+	 * the loop for the logged user
+	 * @param userName the logged user
+	 */
 	public static void userLoop(String userName) {
 		MailBox mBox = sys.getMailBox(userName);
 		userLoop: do {
@@ -484,7 +485,9 @@ public class CLI {
 	}
 	
 	
-	
+	/**
+	 * Prints the system operation
+	 */
 	public static void printSysOps() {
 		System.out.println("\n\nSys operations: ");
 		System.out.println("\ncreateuser <user nickname> <name> <year of birth (yyyy)> : Create a new user as admin");
@@ -504,7 +507,9 @@ public class CLI {
 	}
 	
 	
-	
+	/**
+	 * Prints the user operation
+	 */
 	public static void printUserOps() {
 		System.out.println("\n\nUser operations: ");
 		System.out.println("\nsend <to> : send a new message.");
@@ -526,6 +531,9 @@ public class CLI {
 		System.out.println("\nlogout : Exit from user to system.");
 	}
 	
+	/**
+	 * Prints the menu for choosing the mail store type
+	 */
 	public static void fileMenu() {
 		//loop for selecting a MailSystem from memory or from a file
 		//if the file does't exist we continue asking

@@ -28,9 +28,8 @@ public class MailBox implements Iterable<Message>{
 	
 	
 	/**
-	 * @param user
-	 * @param mailStore
-	 * @param messages
+	 * @param user the owner
+	 * @param mailStore the mail store to access
 	 */
 	public MailBox(User user, MailStore mailStore) {
 		this.user = user;
@@ -48,7 +47,6 @@ public class MailBox implements Iterable<Message>{
 	
 	/**
 	 * Update the MailBox sorted by date
-	 * @throws FileNotFoundException 
 	 */
 	public void updateMail() {
 		try {
@@ -74,8 +72,8 @@ public class MailBox implements Iterable<Message>{
 	/**
 	 * 
 	 * @param destination userName
-	 * @param subject
-	 * @param body
+	 * @param subject the subject of the message
+	 * @param body the body of the message
 	 */
 	public void sendMail(String destination, String subject, String body) {
 		try {
@@ -91,11 +89,10 @@ public class MailBox implements Iterable<Message>{
 	}
 	
 	/**
-	 * 
-	 * @param condition The condition to sort (newer, older, a-z or z-a)
-	 * @return
+	 * Sorts the MailBox using the given predicate
+	 * @param comparator the comparator to sort
+	 * @return the sorted list
 	 */
-	
 	public List<Message> sortBy(Comparator<Message> comparator){
 		return this.messages.stream().sorted(comparator).collect(Collectors.toList());
 	}
@@ -103,71 +100,14 @@ public class MailBox implements Iterable<Message>{
 	
 	
 	/**
-	 * filter the mailbox by a given parameter
-	 * @param condition The condition to filter (sender, subject, body or date)
-	 * date must be format: dd/mm/yyyy
-	 * @param word The string it must search
+	 * Filters the MailBox using the given predicate
+	 * @param predicate the condition predicate
 	 * @return the filtered list
-	 * @throws ParseException 
 	 */
 	public List<Message> filterBy(Predicate<Message> predicate){
 		
 		return this.messages.stream().filter(predicate).collect(Collectors.toList());
-		
-		/*
-		Date date;
-		int number;
-		
-		switch(condition){
-		
-		case "sender": 
-			return this.messages.stream().filter(o -> o.getSender().equals(word)).collect(Collectors.toList());
 
-		case "subject":
-			return this.messages.stream().filter(s -> s.getSubject().contains(word)).collect(Collectors.toList());
-
-		case "body": 
-			return this.messages.stream().filter(s -> s.getBody().contains(word)).collect(Collectors.toList());
-
-		case "after": 
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
-			return this.messages.stream()
-								.filter(s -> s.getDate().after(date))
-								.collect(Collectors.toList());
-
-		case "before": 
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
-			return this.messages.stream()
-								.filter(s -> s.getDate().before(date))
-								.collect(Collectors.toList());
-			
-		case "bodylessthan":
-			number = Integer.parseInt(word);
-			return this.messages.stream()
-						.filter(s -> s.getBody().split("\\s+").length < number)
-						.collect(Collectors.toList());
-			
-		case "bodymorethan":
-			number = Integer.parseInt(word);
-			return this.messages.stream()
-						.filter(s -> s.getBody().split("\\s+").length > number)
-						.collect(Collectors.toList());
-			
-		case "subjectlessthan":
-			number = Integer.parseInt(word);
-			return this.messages.stream()
-						.filter(s -> s.getSubject().split("\\s+").length < number)
-						.collect(Collectors.toList());
-			
-		case "subjectmorethan":
-			number = Integer.parseInt(word);
-			return this.messages.stream()
-						.filter(s -> s.getSubject().split("\\s+").length > number)
-						.collect(Collectors.toList());	
-			
-		default: return null;
-		}
-		*/
 	}
 	
 
@@ -175,7 +115,7 @@ public class MailBox implements Iterable<Message>{
 	/**
 	 * return the amount of messages in the MailBox
 	 * ( = amount of messages for a user)
-	 * @return
+	 * @return the ammount 
 	 */
 	public int messageAmount() {
 		return this.messages.size();

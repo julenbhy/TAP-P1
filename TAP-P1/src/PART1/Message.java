@@ -20,11 +20,11 @@ public class Message {
 	
 	
 	/**
-	 * 
+	 * constructor for creating new messages
 	 * @param sender userName
 	 * @param receiver userName
-	 * @param subject
-	 * @param body
+	 * @param subject the subject of the message
+	 * @param body the body
 	 */
 	public Message( String sender, String receiver, String subject, String body) {
 		this.sender = sender.toLowerCase();
@@ -35,13 +35,12 @@ public class Message {
 	}
 	
 	/**
-	 * 
+	 * constructor for creating messages ridden from a file
 	 * @param sender userName
 	 * @param receiver userName
-	 * @param subject
-	 * @param body
-	 * @param date
-	 * @throws ParseException 
+	 * @param subject the subject of the message
+	 * @param body the body
+	 * @throws ParseException if can't parse the date
 	 */
 	public Message( String sender, String receiver, String subject, String body, String dateString) throws ParseException {
 		this.sender = sender;
@@ -54,17 +53,17 @@ public class Message {
 	
 	
 	/**
-	 * 
-	 * @param user
+	 * to know if the message is intended for a user
+	 * @param userName the user name, will be passed to lower case
 	 * @return True if is intended
 	 */
-	public boolean isIntended(String user) {
-		return this.receiver.equals(user);
+	public boolean isIntended(String userName) {
+		return this.receiver.equals(userName.toLowerCase());
 	}
 	
 	/**
 	 * Checks if a word (no matter if upper or lower case) is contained at the subject
-	 * @param word
+	 * @param word the word, will be passed to lower case
 	 * @return true if contains
 	 */
 	public boolean containsWord(String word) {

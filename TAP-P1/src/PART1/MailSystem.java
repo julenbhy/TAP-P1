@@ -22,8 +22,8 @@ public class MailSystem {
 	private MailStore mailStore;
 
 	/**
-	 * constructor for MailSystem using normal MailStore
-	 * @param mailStore
+	 * constructor for MailSystem MailStore
+	 * @param mailStore the mail store to use
 	 */
 	public MailSystem(MailStore mailStore) {
 		this.users = new ArrayList<User>();
@@ -33,11 +33,11 @@ public class MailSystem {
 	
 	
 	/**
-	 * 
-	 * @param userName
-	 * @param name
-	 * @param yearOfBirth
-	 * @return
+	 * creates a new user
+	 * @param userName the username, will be passed to lower case
+	 * @param name the name of the user
+	 * @param yearOfBirth the year of birth
+	 * @return the MailBox of the user
 	 */
 	public MailBox createUser(String userName, String name, int yearOfBirth) {
 		User user = new User(userName.toLowerCase(), name.toLowerCase(), yearOfBirth);
@@ -53,25 +53,30 @@ public class MailSystem {
 	
 	/**
 	 * Returns the MailBox of a certain userName
-	 * @param userName
+	 * @param userName the userName, will be passed to lower case
 	 * @return the MailBox
 	 */
 	public MailBox getMailBox(String userName) {
 		if(this.userExists(userName)) {
 			int i = 0;
 			for(User elem: users) {
-				if(elem.getUserName().equals(userName)) return this.mailBoxes.get(i);
+				if(elem.getUserName().equals(userName.toLowerCase())) return this.mailBoxes.get(i);
 				i++;
 			}
 		}
 		return null;
 	}
 	
+	/**
+	 * Gets all the messages sent by the user
+	 * @param userName the user name, will be passed to lower case
+	 * @return the list of messages
+	 */
 	public List<Message> getSentMessages(String userName){
 		List<Message> result = new ArrayList<Message>();
 		if(this.userExists(userName)) {
 			result = this.getAllMessages().stream()
-											.filter(i -> i.getSender().equals(userName))
+											.filter(i -> i.getSender().equals(userName.toLowerCase()))
 											.collect(Collectors.toList());
 		}
 		return result;
@@ -79,12 +84,12 @@ public class MailSystem {
 	
 	/**
 	 * Returns the User object of a certain userName
-	 * @param userName
+	 * @param userName the user name, will be passed to lower case
 	 * @return the User
 	 */
 	public User getUser(String userName) {
 		if(this.userExists(userName)) {
-			for(User elem: users) if(elem.getUserName().equals(userName)) return elem;
+			for(User elem: users) if(elem.getUserName().equals(userName.toLowerCase())) return elem;
 		}
 		return null;
 	}
@@ -93,12 +98,12 @@ public class MailSystem {
 	
 	/**
 	 * Checks if the userName is already used
-	 * @param userName
+	 * @param userName the user name, will be passed to lower case
 	 * @return true if it is used
 	 */
 	public boolean userExists(String userName) {
 		for(User elem: users) {
-			if(elem.getUserName().toLowerCase().equals(userName.toLowerCase())) return true;
+			if(elem.getUserName().equals(userName.toLowerCase())) return true;
 		}
 		return false;
 	}
@@ -118,7 +123,8 @@ public class MailSystem {
 	}
 	
 	/**
-	 * @return the users
+	 * Gets all the users
+	 * @return a list of users
 	 */
 	public List<User> getUsers() {
 		return users;
@@ -126,139 +132,59 @@ public class MailSystem {
 
 
 	/**
-	 * 
-	 * @param condition The condition to sort (newer, older, a-z or z-a)
-	 * @return
+	 * Sorts the MailSystem using the given predicate
+	 * @param comparator the comparator to sort
+	 * @return the sorted list
 	 */
-	
 	public List<Message> sortBy(Comparator<Message> comparator){
 		return this.getAllMessages().stream().sorted(comparator).collect(Collectors.toList());
 	}
 	
+	/**
+	 * Filters the MailSystem using the given predicate
+	 * @param predicate the condition predicate
+	 * @return the filtered list
+	 */
 	public List<Message> filterBy(Predicate<Message> predicate){
 		return this.getAllMessages().stream().filter(predicate).collect(Collectors.toList());
 	}
 	
 	
 	/**
-	 * filter all de messages on the system by a given parameter
-	 * @param condition The condition to filter (sender, subject, body or date)
-	 * date must be format: dd/mm/yyyy
-	 * @param word The string it must search
-	 * @return the filtered list
-	 * @throws ParseException 
-	 */
-	/*
-	public List<Message> filterBy(String condition, String word) throws ParseException, NumberFormatException{
-
-		Date date;
-		int number;
-		
-		switch(condition){
-		
-		case "sender": 
-			return this.getAllMessages().stream()
-										.filter(o -> o.getSender().equals(word)).collect(Collectors.toList());
-			
-		case "receiver": 
-			return this.getAllMessages().stream()
-										.filter(o -> o.getReceiver().equals(word)).collect(Collectors.toList());
-
-		case "subject":
-			return this.getAllMessages().stream()
-										.filter(o -> o.getSubject().contains(word)).collect(Collectors.toList());
-
-		case "body": 
-			return this.getAllMessages().stream()
-										.filter(o -> o.getBody().contains(word)).collect(Collectors.toList());
-
-		case "after": 
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
-			return this.getAllMessages().stream()
-										.filter(s -> s.getDate().after(date))
-										.collect(Collectors.toList());
-
-		case "before": 
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(word);
-			return this.getAllMessages().stream()
-										.filter(s -> s.getDate().before(date))
-										.collect(Collectors.toList());
-			
-		case "senderafter":
-			number = Integer.parseInt(word);
-			List<Message> resultAfter = new ArrayList<>();
-			this.users.stream()
-						.filter(s -> s.getYearOfBirth() >= number)
-						.forEach(s -> resultAfter.addAll(getSentMessages(s.getUserName())));
-			return resultAfter;
-			
-		case "senderbefore":
-			number = Integer.parseInt(word);
-			List<Message> resultBefore = new ArrayList<>();
-			this.users.stream()
-						.filter(s -> s.getYearOfBirth() < number)
-						.forEach(s -> resultBefore.addAll(getSentMessages(s.getUserName())));
-			return resultBefore;
-			
-		case "bodylessthan":
-			number = Integer.parseInt(word);
-			return this.getAllMessages().stream()
-						.filter(s -> s.getBody().split("\\s+").length < number)
-						.collect(Collectors.toList());
-			
-		case "bodymorethan":
-			number = Integer.parseInt(word);
-			return this.getAllMessages().stream()
-						.filter(s -> s.getBody().split("\\s+").length > number)
-						.collect(Collectors.toList());
-			
-		case "subjectlessthan":
-			number = Integer.parseInt(word);
-			return this.getAllMessages().stream()
-						.filter(s -> s.getSubject().split("\\s+").length < number)
-						.collect(Collectors.toList());
-			
-		case "subjectmorethan":
-			number = Integer.parseInt(word);
-			return this.getAllMessages().stream()
-						.filter(s -> s.getSubject().split("\\s+").length > number)
-						.collect(Collectors.toList());	
-			
-		default: return null;
-		}
-	}
-	*/
-	
-	
-	/**
-	 * return the total amount of messages in the system
-	 * @return
+	 * gets the total amount of messages in the system
+	 * @return the total amount of messages in the system
 	 */
 	public int messageAmount() {
 		return this.getAllMessages().size();
 	}
 	
 	/**
-	 * return the average amount of messages per user in the system
-	 * @return
+	 * gets the average amount of messages per user in the system
+	 * @return the average amount of messages per user in the system
 	 */
 	public float averageMessages() {
 		return (float) this.messageAmount()/(float) this.users.size();
 	}
 	
-	
+	/**
+	 * groups the messages by subject
+	 * @return a map with the grouped messages
+	 */
 	public Map<String, List<Message>> groupBySubject(){
 	return this.getAllMessages().stream()
 								.collect(Collectors.groupingBy(Message::getSubject));	
 	}
 	
-	
+	/**
+	 * counts the words of all the messages sent by a certain user
+	 * @param name the name, will be passed to lower case (not username)
+	 * @return the number of messages
+	 */
 	public int countWords(String name) {
 		return this.getAllMessages().stream()
 							.filter(s -> this.getUser(s.getSender()).getName().toLowerCase().equals(name.toLowerCase()))
 							.mapToInt(s -> s.getBody().split("\\s+").length).sum();
 							//.forEach(s -> result =+ s.getBody().split("\\s+").length);
-
 	}
 
 
