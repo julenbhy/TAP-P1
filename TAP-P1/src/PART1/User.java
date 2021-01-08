@@ -13,12 +13,12 @@ public class User {
 		
 		
 		/**
-		 * @param userName
-		 * @param name
-		 * @param yearOfBirth
+		 * @param userName the user name, will be passed to lower case
+		 * @param name the name
+		 * @param yearOfBirth the year of birth
 		 */
 		public User(String userName, String name, int yearOfBirth) {
-			this.userName = userName;
+			this.userName = userName.toLowerCase();
 			this.name = name;
 			this.yearOfBirth = yearOfBirth;
 		}
@@ -44,7 +44,9 @@ public class User {
 			return yearOfBirth;
 		}
 
-		
+		/**
+		 * prints the user information
+		 */
 		public void printUser() {
 			System.out.println("User [userName=" + userName + ", name=" + name + ", yearOfBirth=" + yearOfBirth + "]");
 		}

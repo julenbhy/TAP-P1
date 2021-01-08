@@ -3,7 +3,6 @@
  */
 package PART1;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,11 +17,10 @@ import java.util.stream.Collectors;
 public class UnitTest {
 
 	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 * @throws ParseException 
+	 * @param args no args
+	 * @throws InterruptedException can't sleep
 	 */
-	public static void main(String[] args) throws InterruptedException, ParseException {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
 		//Step 1: Initialize the mail system

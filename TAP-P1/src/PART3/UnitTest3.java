@@ -3,7 +3,6 @@
  */
 package PART3;
 
-import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 import PART1.*;
 
@@ -12,16 +11,14 @@ import PART1.*;
 /**
  * @author Julen Bohoyo Bengoetxea
  * @author Alberto Iglesias Burgos
- *
  */
 public class UnitTest3 {
 
 	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 * @throws ParseException 
+	 * @param args no args
+	 * @throws InterruptedException can't sleep
 	 */
-	public static void main(String[] args) throws InterruptedException, ParseException {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
 		MailStoreFactory mailStoreFactory = new MailStoreRedisFactory();

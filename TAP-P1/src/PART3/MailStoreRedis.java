@@ -10,6 +10,10 @@ import PART1.MailStore;
 import PART1.Message;
 import redis.clients.jedis.Jedis;
 
+/**
+ * @author Julen Bohoyo Bengoetxea
+ * @author Alberto Iglesias Burgos
+ */
 public class MailStoreRedis implements MailStore{
 
 	Jedis jedis = new Jedis("localhost");

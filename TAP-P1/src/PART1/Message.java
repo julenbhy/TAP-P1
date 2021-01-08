@@ -40,6 +40,7 @@ public class Message {
 	 * @param receiver userName
 	 * @param subject the subject of the message
 	 * @param body the body
+	 * @param dateString the original date of the message
 	 * @throws ParseException if can't parse the date
 	 */
 	public Message( String sender, String receiver, String subject, String body, String dateString) throws ParseException {
