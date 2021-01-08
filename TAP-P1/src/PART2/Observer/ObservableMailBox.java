@@ -11,16 +11,30 @@ import PART1.MailStore;
 import PART1.Message;
 import PART1.User;
 
+/**
+ * @author Julen Bohoyo Bengoetxea
+ * @author Alberto Iglesias Burgos
+ *
+ */
 public class ObservableMailBox extends MailBox{
 	
 	private List<SpamObserver> observerList = new ArrayList<>();
 	private List<Message> spam = new ArrayList<>();
 	
+	/**
+	 * Constructor for ObservableMailBox 
+	 * @param user class with the whole info
+	 * @param mailStore to store the data
+	 */
 	public ObservableMailBox(User user, MailStore mailStore) {
 		super(user, mailStore);
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Add one observer to the observerList
+	 * @param subscriptor of one type of spam
+	 */
 	public void addObserver(SpamObserver subscriptor){ observerList.add(subscriptor);}
 	
 	@Override
@@ -41,8 +55,8 @@ public class ObservableMailBox extends MailBox{
 	}
 
 	/**
-	 * 
-	 * @return spam list
+	 * Get a list with all the messages added to spam
+	 * @return spam messages in one list
 	 */
 	public List<Message> getSpam() {
 		return spam;

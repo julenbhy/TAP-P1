@@ -3,13 +3,8 @@
  */
 package PART2;
 
-import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 import PART1.*;
-
-
-
-
 
 
 /**
@@ -20,11 +15,11 @@ import PART1.*;
 public class UnitTestDecorator {
 
 	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 * @throws ParseException 
+	 * Unit test for decorator
+	 * @param args no args needed
+	 * @throws InterruptedException in case of interruption 
 	 */
-	public static void main(String[] args) throws InterruptedException, ParseException {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
 		MailStore mailStore = new MailStoreFile("unitTestFile2.txt");

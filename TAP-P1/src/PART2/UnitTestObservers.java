@@ -3,9 +3,7 @@
  */
 package PART2;
 
-import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
-
 import PART1.*;
 import PART2.Observer.*;
 
@@ -19,11 +17,11 @@ import PART2.Observer.*;
 public class UnitTestObservers {
 
 	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 * @throws ParseException 
+	 * Unit test for observer
+	 * @param args no args needed
+	 * @throws InterruptedException in case of interruption
 	 */
-	public static void main(String[] args) throws InterruptedException, ParseException {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
 		MailStore mailStore = new MailStoreMem();

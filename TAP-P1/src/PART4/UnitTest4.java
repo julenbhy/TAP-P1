@@ -3,11 +3,8 @@
  */
 package PART4;
 
-import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 import PART1.*;
-
-
 
 /**
  * @author Julen Bohoyo Bengoetxea
@@ -17,11 +14,10 @@ import PART1.*;
 public class UnitTest4 {
 
 	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 * @throws ParseException 
+	 * @param args no args needed
+	 * @throws InterruptedException can't sleep
 	 */
-	public static void main(String[] args) throws InterruptedException, ParseException {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
 		MailSystemPart4 mSystem = new MailSystemPart4();

@@ -7,20 +7,35 @@ import java.util.List;
 import PART1.MailStore;
 import PART1.Message;
 
-//en el enunciado dice tenemos que usar Decorator y Strategy, osea que queremos hacer un decorator que a su vez dentro tenga
-//dos implementaciones gracias a strategi, strategi se suele hacer con interface, pero como ahora lo harermos dentro de un 
-//decorator pues tenemos que usar una abstract class.
-//en este enlace explican justo esto https://stackoverflow.com/questions/25098726/using-an-abstract-class-instead-of-the-interface-in-the-strategy-design-pattern
+/**
+ * @author Julen Bohoyo Bengoetxea
+ * @author Alberto Iglesias Burgos
+ *
+ */
 public abstract class WrapperForTheMailStore implements MailStore{
 	
 	protected MailStore client;
 	
+	/**
+	 * Constructor for WrapperForTheMailStore
+	 * @param client is the mailstore that we want to encrypt
+	 */
 	public WrapperForTheMailStore(MailStore client) {
 		super();
 		this.client = client;
 	}
-
+	
+	/**
+	 * Stores a mail in the MailStore
+	 * @throws IOException if the file is not found
+	 */
 	public abstract void sendMail(Message mail) throws IOException;
 	
+	/**
+	 * get all the mails for a certain user
+	 * @param user the certain user
+	 * @return a List with the mails
+	 * @throws FileNotFoundException if the file is not found
+	 */
 	public abstract List<Message> getMails(String user) throws FileNotFoundException;
 }

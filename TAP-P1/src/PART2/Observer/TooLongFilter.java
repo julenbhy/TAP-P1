@@ -4,6 +4,11 @@ import java.util.List;
 
 import PART1.Message;
 
+/**
+ * @author Julen Bohoyo Bengoetxea
+ * @author Alberto Iglesias Burgos
+ *
+ */
 public class TooLongFilter extends SpamObserver{
 
 	private static final int MAXLENGTH = 20;

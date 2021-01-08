@@ -4,12 +4,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import PART1.MailStore;
 import PART1.Message;
 
+/**
+ * @author Julen Bohoyo Bengoetxea
+ * @author Alberto Iglesias Burgos
+ *
+ */
 public class ReverseEncrypted extends WrapperForTheMailStore {
 
+	/**
+	 * Constructor for RevereseEncrypted 
+	 * @param client is the MailStore that we want to encrypt
+	 */
 	public ReverseEncrypted(MailStore client) {
 	super(client);
 		// TODO Auto-generated constructor stub

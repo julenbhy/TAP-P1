@@ -6,19 +6,28 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
-
 import java.util.ArrayList;
 import java.util.Base64;
-
 import PART1.MailStore;
 import PART1.Message;
 
+/**
+ * @author Julen Bohoyo Bengoetxea
+ * @author Alberto Iglesias Burgos
+ *
+ */
 public class CipherEncrypted extends WrapperForTheMailStore{
 	
 	
 	Cipher cipher;
 	java.security.Key aesKey;
 	
+	/**
+	 * Constructor for CipherEncrypted
+	 * @param client is the MailStore that we want to encrypt
+	 * @throws NoSuchAlgorithmException in case of wrong encryption
+	 * @throws NoSuchPaddingException in case of wrong encryption
+	 */
 	public CipherEncrypted(MailStore client) throws NoSuchAlgorithmException, NoSuchPaddingException {
 		super(client);
 		String key = "IWantToPassTAP12"; // 128 bit key
@@ -53,7 +62,11 @@ public class CipherEncrypted extends WrapperForTheMailStore{
 		}
 		return result;
 	}
-	
+	/**
+	 * Encrypt the body
+	 * @param body to encrypt
+	 * @return the body encrypted
+	 */
 	private String encrypt(String body) {
 		byte[] encrypted = new byte[0];
 		try {
@@ -66,6 +79,11 @@ public class CipherEncrypted extends WrapperForTheMailStore{
 		
 	}
 	
+	/**
+	 * Decrypt the body
+	 * @param body which is encrypted
+	 * @return a legible body
+	 */
 	private String decrypt(String body) {
 		byte[] encrypted = Base64.getDecoder().decode(body.getBytes());
 		String decrypted = null;
