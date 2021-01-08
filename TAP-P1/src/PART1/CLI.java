@@ -102,7 +102,7 @@ public class CLI {
 										
 					
 				case "filter":		System.out.println("Select a filter option: sender, subject, body, after, before,"
-													+ " bodylessthan, bodymorethan, subjectlessthan, subjectmorethan");
+													+ " bodylessthan, bodymorethan, subjectlessthan, subjectmorethan, senderafter, senderbefore");
 									Date date;
 									int number;
 									Predicate<Message> predicate;
@@ -358,7 +358,7 @@ public class CLI {
 
 					
 				case "filter":		System.out.println("Select a filter option: sender, subject, body, after, before,"
-														+ " bodylessthan, bodymorethan, subjectlessthan, subjectmorethan");
+														+ " bodylessthan, bodymorethan, subjectlessthan, subjectmorethan, senderafter, senderbefore");
 									Date date;
 									int number;
 									Predicate<Message> predicate;
@@ -456,24 +456,39 @@ public class CLI {
 									        }
 											break;
 											
+										case "senderafter":
+											System.out.println("Introduce the minimum year: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												List<String> senders = new ArrayList<>();
+												sys.getUsers().stream().filter(s -> s.getYearOfBirth() >= number).forEach(s -> senders.add(s.getUserName())); 
+												predicate = o -> senders.contains(o.getSender());
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
+										case "senderbefore":
+											System.out.println("Introduce the maximum year: ");
+											try{
+												number = Integer.parseInt(sc.nextLine());
+												List<String> senders = new ArrayList<>();
+												sys.getUsers().stream().filter(s -> s.getYearOfBirth() < number).forEach(s -> senders.add(s.getUserName())); 
+												predicate = o -> senders.contains(o.getSender());
+												sys.filterBy(predicate).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
+														s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
+											} catch (NumberFormatException e) {
+									        	System.out.println("Error: Incorrect number format");
+									        }
+											break;
+											
 										default: System.out.println("Not a valid option");
 												 break;
+						
 									}
 					
-									/*
-									if(command.length != 3) {	//checks if the number of arguments is correct
-										System.out.println("Error: Incorrect args");
-										break;
-									}
-									try {
-										mBox.filterBy(command[1], command[2]).stream().forEach(s ->  System.out.println("Message from: "+s.getSender()+", to: "+
-																									s.getReceiver()+"\n\tSubject: "+s.getSubject()+"\n\tBody: "+s.getBody()));
-									} catch (ParseException e) {
-										System.out.println("Error: Incorrect date format");
-									}catch (NumberFormatException e) {
-							        	System.out.println("Error: Incorrect number format");
-							        }
-							        */
 									break;
 						
 				case "logout":		System.out.println("Good bye "+userName+", see you soon :)");
@@ -491,18 +506,7 @@ public class CLI {
 	public static void printSysOps() {
 		System.out.println("\n\nSys operations: ");
 		System.out.println("\ncreateuser <user nickname> <name> <year of birth (yyyy)> : Create a new user as admin");
-		System.out.println("\nfilter <filter type> <condition>: Filter at a system level. The program has implemented several conditions for "
-						+ "\nfiltering messages and can be referenced from the command. For instance: "
-						+ "\n\t- sender <word> : filters all messages sent by a sender"
-						+ "\n\t- receiver <word> : filters all messages sent to a receiver"
-						+ "\n\t- subject <word> : filters all messages that contain the word in the subject."
-						+ "\n\t- body <word> : filters all messages that contain the word in the body. "
-						+ "\n\t- after <n> : filters messages that were sent after a date (dd/MM/yyyy)."
-						+ "\n\t- before <n> : filters messages that were sent before a date (dd/MM/yyyy)."
-						+ "\n\t- senderafter <n> : filters messages that were sent by a user borned after a year (yyyy)."
-						+ "\n\t- senderbefore <n> : filters messages that were sent by a user borned before a year (yyyy)."
-						+ "\n\t- lessthan <n> : filters messages that contain less than n words in the body."
-						+ "\n\t- morethan <n> : filters messages that contain more than n words in the body.");
+		System.out.println("\nfilter: Filter at a system level.");
 		System.out.println("\nlogas <username> : Log in as a user. No passwords");
 	}
 	
@@ -512,22 +516,11 @@ public class CLI {
 	 */
 	public static void printUserOps() {
 		System.out.println("\n\nUser operations: ");
-		System.out.println("\nsend <to> : send a new message.");
-		System.out.println("\nupdate : retrieve messages from the mail store.");
-		System.out.println("\nlist : show messages sorted by sent time.");
+		System.out.println("\nsend <to>: send a new message.");
+		System.out.println("\nupdate: retrieve messages from the mail store.");
+		System.out.println("\nlist: show messages sorted by sent time.");
 		System.out.println("\nsort <> : sort messages by some predefined comparators.");
-		System.out.println("\nfilter <filter type> <condition>: Filter at user level. The program has implemented several conditions for "
-						+ "\nfiltering messages and can be referenced from the command. For instance: "
-						+ "\n\t- sender <word> : filters all messages sent by a sender"
-						+ "\n\t- receiver <word> : filters all messages sent to a receiver"
-						+ "\n\t- subject <word> : filters all messages that contain the word in the subject."
-						+ "\n\t- body <word> : filters all messages that contain the word in the body. "
-						+ "\n\t- after <n> : filters messages that were sent after a date (dd/MM/yyyy)."
-						+ "\n\t- before <n> : filters messages that were sent before a date (dd/MM/yyyy)."
-						+ "\n\t- senderafter <n> : filters messages that were sent by a user borned after a year (yyyy)."
-						+ "\n\t- senderbefore <n> : filters messages that were sent by a user borned before a year (yyyy)."
-						+ "\n\t- lessthan <n> : filters messages that contain less than n words in the body."
-						+ "\n\t- morethan <n> : filters messages that contain more than n words in the body.");
+		System.out.println("\nfilter: Filter at user level.");
 		System.out.println("\nlogout : Exit from user to system.");
 	}
 	
