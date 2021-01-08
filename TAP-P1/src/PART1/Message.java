@@ -110,7 +110,7 @@ public class Message {
 		return date;
 	}
 
-	/**
+	/** 
 	 * Prints the message
 	 */
 	public void printMessage() {
